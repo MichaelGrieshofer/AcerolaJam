@@ -1,4 +1,4 @@
 Input Prompts by xelu: https://www.reddit.com/r/gamedev/comments/1z0zid/free_keyboard_and_controllers_prompts_pack/
 Textures from Kenney (Pattern Pack 1 & 2, Prototype Textures, Particle Pack): https://www.kenney.nl/
 Action Icon addon by KoBeWi: https://github.com/KoBeWi/Godot-Action-Icon
-Simple Grass Textured addon by IcterusGames: https://github.com/IcterusGames/SimpleGrassTextured
+Color Palette: https://lospec.com/palette-list/wyrm-moth48

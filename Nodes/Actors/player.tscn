@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://cp3dx60c3mnkf"]
+
+[ext_resource type="Script" path="res://Scripts/player_interaction_area.gd" id="1_bfou5"]
+[ext_resource type="Texture2D" uid="uid://bac8oj8v1ki25" path="res://Textures/Sprites/player_placeholder.png" id="1_u7ihi"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_is6j2"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/idle.gd" id="3_70r22"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/walk.gd" id="4_3i1dh"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/fall.gd" id="5_lwehy"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/jump.gd" id="6_d6ac8"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/player_helper.gd" id="7_30uh2"]
+[ext_resource type="PackedScene" uid="uid://c4uq5yampsad" path="res://Nodes/Effects/full_screen_rain.tscn" id="8_0gdqn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
+size = Vector2(5, 15)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_c5opg")
+
+[node name="Interaction" type="Area2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_bfou5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction"]
+visible = false
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_c5opg")
+debug_color = Color(0.658824, 0.431373, 0.733333, 0.419608)
+
+[node name="PlayerPlaceholder" type="Sprite2D" parent="."]
+texture = ExtResource("1_u7ihi")
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state", "actor", "helper")]
+script = ExtResource("2_is6j2")
+state = NodePath("Idle")
+actor = NodePath("..")
+helper = NodePath("PlayerHelper")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("3_70r22")
+deceleration = 0.3
+
+[node name="Walk" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("4_3i1dh")
+acceleration = 0.2
+speed = 60.0
+
+[node name="Fall" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("5_lwehy")
+gravity = 400.0
+speed = 60.0
+
+[node name="Jump" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_d6ac8")
+jump_height = 150.0
+gravity = 400.0
+speed = 60.0
+
+[node name="PlayerHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("ct", "ib", "idle_state", "walk_state", "fall_state", "jump_state")]
+script = ExtResource("7_30uh2")
+ct = NodePath("../../CT")
+ib = NodePath("../../IB")
+idle_state = NodePath("../Idle")
+walk_state = NodePath("../Walk")
+fall_state = NodePath("../Fall")
+jump_state = NodePath("../Jump")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -50)
+
+[node name="FullScreenRain" parent="." instance=ExtResource("8_0gdqn")]
+position = Vector2(-160, -184)
+
+[node name="CT" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="IB" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="area_entered" from="Interaction" to="Interaction" method="_on_area_entered"]
+[connection signal="area_exited" from="Interaction" to="Interaction" method="_on_area_exited"]

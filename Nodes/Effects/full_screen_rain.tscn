@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4uq5yampsad"]
+
+[ext_resource type="Shader" path="res://Resources/Shaders/rain.gdshader" id="1_a6srj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_knv7b"]
+shader = ExtResource("1_a6srj")
+shader_parameter/transparency = 1.0
+shader_parameter/offset = Vector2(0, -0.015)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fb0pc"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(300, 1, 1)
+direction = Vector3(0.1, 1, 0)
+spread = 0.0
+flatness = 0.247
+initial_velocity_min = 200.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 10, 0)
+damping_min = 22.472
+damping_max = 35.955
+scale_min = 0.5
+scale_max = 0.5
+color = Color(1, 1, 1, 0.0666667)
+collision_mode = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t1umu"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(300, 1, 1)
+direction = Vector3(0.1, 1, 0)
+spread = 0.0
+flatness = 0.247
+initial_velocity_min = 200.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 10, 0)
+damping_min = 22.472
+damping_max = 35.955
+scale_min = 0.5
+scale_max = 0.5
+color = Color(1, 1, 1, 0.0666667)
+collision_mode = 2
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tj6d2"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(300, 1, 1)
+direction = Vector3(0.1, 1, 0)
+spread = 0.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 0.4
+color = Color(1, 1, 1, 0.0666667)
+collision_mode = 2
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+
+[node name="FullScreenRain" type="Node2D"]
+
+[node name="Rain1" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_knv7b")
+position = Vector2(156, 0)
+amount = 300
+process_material = SubResource("ParticleProcessMaterial_fb0pc")
+speed_scale = 1.5
+trail_enabled = true
+trail_lifetime = 0.15
+
+[node name="Rain2" type="GPUParticles2D" parent="."]
+position = Vector2(156, 0)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_t1umu")
+trail_enabled = true
+trail_lifetime = 0.15
+
+[node name="Rain3" type="GPUParticles2D" parent="."]
+position = Vector2(156, 0)
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_tj6d2")
+speed_scale = 1.5
+randomness = 1.0
+trail_enabled = true
+trail_lifetime = 0.1

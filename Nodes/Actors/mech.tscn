@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://bnqlw7ldqlw8q"]
+
+[ext_resource type="Script" path="res://Scripts/mech_interaction_area.gd" id="1_a78nb"]
+[ext_resource type="Texture2D" uid="uid://2xkatc5j6cj3" path="res://Textures/Sprites/mech_placeholder.png" id="1_fk3qp"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_81wgb"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/idle.gd" id="3_uxhkv"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/walk.gd" id="4_b18wj"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_helper.gd" id="5_2vjcb"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/fall.gd" id="5_6cxx8"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/generic/jump.gd" id="6_hjjk4"]
+[ext_resource type="PackedScene" uid="uid://c4uq5yampsad" path="res://Nodes/Effects/full_screen_rain.tscn" id="8_npjmf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
+size = Vector2(20, 56)
+
+[node name="Mech" type="CharacterBody2D"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_c5opg")
+
+[node name="Interaction" type="Area2D" parent="."]
+script = ExtResource("1_a78nb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Interaction"]
+visible = false
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_c5opg")
+
+[node name="MechPlaceholder" type="Sprite2D" parent="."]
+texture = ExtResource("1_fk3qp")
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state", "actor", "helper")]
+script = ExtResource("2_81wgb")
+state = NodePath("Idle")
+actor = NodePath("..")
+helper = NodePath("MechHelper")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("3_uxhkv")
+
+[node name="Walk" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("4_b18wj")
+
+[node name="Fall" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("5_6cxx8")
+acceleration = 0.01
+speed = 30.0
+
+[node name="Jump" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_hjjk4")
+acceleration = 0.01
+speed = 30.0
+
+[node name="MechHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("ct", "ib", "idle_state", "walk_state", "fall_state", "jump_state")]
+script = ExtResource("5_2vjcb")
+ct = NodePath("../../CT")
+ib = NodePath("../../IB")
+idle_state = NodePath("../Idle")
+walk_state = NodePath("../Walk")
+fall_state = NodePath("../Fall")
+jump_state = NodePath("../Jump")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -30)
+
+[node name="FullScreenRain" parent="." instance=ExtResource("8_npjmf")]
+position = Vector2(-160, -160)
+
+[node name="CT" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="IB" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
