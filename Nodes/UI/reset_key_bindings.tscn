@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/reset_default_key_mapping.gd" id="1_gto3n"]
+
+[node name="ResetKeyBindings" type="Button"]
+offset_right = 65.0
+offset_bottom = 31.0
+text = "Default"
+script = ExtResource("1_gto3n")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

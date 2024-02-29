@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b775pwwe4xsjq"]
+
+[ext_resource type="Script" path="res://Scripts/sound_manager.gd" id="1_lrshr"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="2_sfe4i"]
+[ext_resource type="AudioStream" uid="uid://dhd1ioyhwv3ew" path="res://Sound/SFX/click.wav" id="3_toqe0"]
+
+[node name="SoundManager" type="Node"]
+script = ExtResource("1_lrshr")
+
+[node name="Click" type="Node" parent="."]
+script = ExtResource("2_sfe4i")
+min_pitch = 0.95
+max_pitch = 1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Click"]
+stream = ExtResource("3_toqe0")
+max_polyphony = 2
+bus = &"SFX"

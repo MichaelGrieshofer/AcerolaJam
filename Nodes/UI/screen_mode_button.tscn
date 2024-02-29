@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bshdlywrndgrc"]
+
+[ext_resource type="Script" path="res://Scripts/screen_mode_button.gd" id="1_3uevu"]
+
+[node name="ScreenModeButton" type="OptionButton"]
+offset_right = 149.0
+offset_bottom = 20.0
+script = ExtResource("1_3uevu")
+
+[connection signal="item_selected" from="." to="." method="_on_item_selected"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

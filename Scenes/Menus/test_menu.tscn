@@ -1,0 +1,194 @@
+[gd_scene load_steps=10 format=3 uid="uid://cujs7atrpg0wo"]
+
+[ext_resource type="PackedScene" path="res://Nodes/UI/change_scene_button.tscn" id="1_jmsnh"]
+[ext_resource type="PackedScene" uid="uid://bshdlywrndgrc" path="res://Nodes/UI/screen_mode_button.tscn" id="2_oxtip"]
+[ext_resource type="PackedScene" uid="uid://cyfe4w5r44kjl" path="res://Nodes/UI/msaa.tscn" id="3_wc1u7"]
+[ext_resource type="PackedScene" uid="uid://ck05lremoogwd" path="res://Nodes/UI/taa.tscn" id="4_68cne"]
+[ext_resource type="PackedScene" uid="uid://ltpyotnhf46e" path="res://Nodes/UI/v_sync.tscn" id="5_g1lo8"]
+[ext_resource type="PackedScene" path="res://Nodes/UI/volume_slider.tscn" id="6_1r40j"]
+[ext_resource type="PackedScene" path="res://Nodes/UI/rebind_button.tscn" id="7_3gibd"]
+[ext_resource type="PackedScene" path="res://Nodes/UI/reset_key_bindings.tscn" id="8_ccapr"]
+[ext_resource type="AudioStream" uid="uid://cp7oip3ttnu23" path="res://Sound/Music/Waterways.mp3" id="9_mdnqr"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Main" type="Control" parent="TabContainer"]
+layout_mode = 2
+
+[node name="ChangeSceneButton" parent="TabContainer/Main" instance=ExtResource("1_jmsnh")]
+layout_mode = 1
+text = "Start Game
+"
+scene = "res://Scenes/Levels/test_scene.tscn"
+
+[node name="Graphics" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Graphics"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -131.0
+offset_right = 144.0
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScreenModeButton" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("2_oxtip")]
+layout_mode = 2
+
+[node name="MSAA" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("3_wc1u7")]
+layout_mode = 2
+
+[node name="TAA" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("4_68cne")]
+layout_mode = 2
+
+[node name="V-sync" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("5_g1lo8")]
+layout_mode = 2
+
+[node name="Volume" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Volume"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.5
+offset_top = -175.0
+offset_right = 264.5
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Volume/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TabContainer/Volume/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Master"
+vertical_alignment = 1
+
+[node name="VolumeSlider" parent="TabContainer/Volume/VBoxContainer/HBoxContainer" instance=ExtResource("6_1r40j")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+size_flags_stretch_ratio = 3.15
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Volume/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TabContainer/Volume/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "SFX"
+vertical_alignment = 1
+
+[node name="VolumeSlider" parent="TabContainer/Volume/VBoxContainer/HBoxContainer2" instance=ExtResource("6_1r40j")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+size_flags_stretch_ratio = 3.15
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+bus = "SFX"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Volume/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TabContainer/Volume/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Music"
+vertical_alignment = 1
+
+[node name="VolumeSlider" parent="TabContainer/Volume/VBoxContainer/HBoxContainer3" instance=ExtResource("6_1r40j")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+size_flags_stretch_ratio = 3.15
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+bus = "Music"
+
+[node name="KeyBindings" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/KeyBindings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_top = -211.0
+offset_right = 211.0
+offset_bottom = 211.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RebindButton" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+
+[node name="RebindButton2" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 1
+
+[node name="RebindButton3" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 2
+
+[node name="RebindButton4" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 3
+
+[node name="RebindButton5" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 4
+
+[node name="RebindButton6" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 5
+
+[node name="ResetKeyBindings" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("8_ccapr")]
+layout_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_mdnqr")
+autoplay = true

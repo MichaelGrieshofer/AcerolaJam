@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyfe4w5r44kjl"]
+
+[ext_resource type="Script" path="res://Scripts/msaa.gd" id="1_maxuw"]
+
+[node name="MSAA" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -922.0
+offset_bottom = -590.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_maxuw")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "MSAA "
+
+[node name="OptionsButton" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="item_selected" from="OptionsButton" to="." method="_on_check_button_item_selected"]
+[connection signal="pressed" from="OptionsButton" to="." method="_on_check_button_pressed"]
