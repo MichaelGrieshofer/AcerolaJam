@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cp3dx60c3mnkf"]
+[gd_scene load_steps=13 format=3 uid="uid://cp3dx60c3mnkf"]
 
 [ext_resource type="Script" path="res://Scripts/player_interaction_area.gd" id="1_bfou5"]
 [ext_resource type="Texture2D" uid="uid://bac8oj8v1ki25" path="res://Textures/Sprites/player_placeholder.png" id="1_u7ihi"]
@@ -8,10 +8,17 @@
 [ext_resource type="Script" path="res://Scripts/StateMachine/generic/fall.gd" id="5_lwehy"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/generic/jump.gd" id="6_d6ac8"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/player_helper.gd" id="7_30uh2"]
-[ext_resource type="PackedScene" uid="uid://c4uq5yampsad" path="res://Nodes/Effects/full_screen_rain.tscn" id="8_0gdqn"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="9_nlr2q"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_0na88"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(5, 15)
+
+[sub_resource type="Resource" id="Resource_mqesb"]
+script = ExtResource("10_0na88")
+duration = 0.3
+transition = 0
+ease = 2
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 0
@@ -60,20 +67,15 @@ jump_height = 150.0
 gravity = 400.0
 speed = 60.0
 
-[node name="PlayerHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("ct", "ib", "idle_state", "walk_state", "fall_state", "jump_state")]
+[node name="PlayerHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("ct", "ib", "body", "idle_state", "walk_state", "fall_state", "jump_state")]
 script = ExtResource("7_30uh2")
 ct = NodePath("../../CT")
 ib = NodePath("../../IB")
+body = NodePath("../../PlayerPlaceholder")
 idle_state = NodePath("../Idle")
 walk_state = NodePath("../Walk")
 fall_state = NodePath("../Fall")
 jump_state = NodePath("../Jump")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(0, -50)
-
-[node name="FullScreenRain" parent="." instance=ExtResource("8_0gdqn")]
-position = Vector2(-160, -184)
 
 [node name="CT" type="Timer" parent="."]
 wait_time = 0.2
@@ -82,6 +84,31 @@ one_shot = true
 [node name="IB" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="PhantomCamera2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -40)
+script = ExtResource("9_nlr2q")
+priority_override = false
+priority = 0
+zoom = Vector2(1, 1)
+follow_mode = 2
+follow_target = NodePath("..")
+follow_parameters/target_offset = Vector2(0, -40)
+follow_parameters/damping = true
+follow_parameters/damping_value = 10.0
+frame_preview = false
+pixel_perfect = false
+limit/draw_limits = false
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+limit/limit_node_target = NodePath("")
+limit/smoothed = false
+tween_parameters = SubResource("Resource_mqesb")
+tween_on_load = true
+inactive_update_mode = 0
 
 [connection signal="area_entered" from="Interaction" to="Interaction" method="_on_area_entered"]
 [connection signal="area_exited" from="Interaction" to="Interaction" method="_on_area_exited"]

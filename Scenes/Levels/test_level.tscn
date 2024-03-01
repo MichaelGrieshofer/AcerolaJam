@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkuqxbfhq1ocl"]
+[gd_scene load_steps=8 format=3 uid="uid://bkuqxbfhq1ocl"]
 
 [ext_resource type="Texture2D" uid="uid://b5ucygh6oia4" path="res://Textures/Sprites/test_tile.png" id="1_516si"]
 [ext_resource type="PackedScene" uid="uid://bnqlw7ldqlw8q" path="res://Nodes/Actors/mech.tscn" id="2_fnett"]
+[ext_resource type="PackedScene" uid="uid://c4uq5yampsad" path="res://Nodes/Effects/full_screen_rain.tscn" id="3_1rbyl"]
 [ext_resource type="PackedScene" uid="uid://cp3dx60c3mnkf" path="res://Nodes/Actors/player.tscn" id="3_yyq54"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_liua7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_elpjc"]
 texture = ExtResource("1_516si")
@@ -27,3 +29,14 @@ position = Vector2(-64, 176)
 
 [node name="Player" parent="." instance=ExtResource("3_yyq54")]
 position = Vector2(8, 200)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-64, 146)
+drag_vertical_enabled = true
+editor_draw_drag_margin = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+script = ExtResource("4_liua7")
+
+[node name="FullScreenRain" parent="Camera2D" instance=ExtResource("3_1rbyl")]
+position = Vector2(-160, -144)

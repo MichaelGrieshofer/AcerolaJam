@@ -5,6 +5,8 @@ extends Node
 @export var actor: Node
 @export var helper: StateHelper
 
+@export var print_test: bool = false
+
 signal state_changed(new_state)
 
 func _ready():
@@ -33,5 +35,7 @@ func change_state(new_state: State):
 
 
 func _physics_process(delta):
+	if print_test:
+		print(state)
 	if state is State:
 		state.physics_update(delta)
