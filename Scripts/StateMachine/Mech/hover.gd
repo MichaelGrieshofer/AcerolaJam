@@ -6,15 +6,12 @@ extends State
 @export var speed: float = 90
 
 
-func set_helper(new_helper):
-	super(new_helper)
-	helper.jump_cancel.connect(end_hover)
-
-
 func physics_update(delta):
 	actor.velocity.y -= propulsion * delta
 	if actor.velocity.y <= -max_propulsion:
 		actor.velocity.y = -max_propulsion
+	if Input.is_action_just_released("jump"):
+		end_hover()
 	air_control()
 	actor.move_and_slide()
 

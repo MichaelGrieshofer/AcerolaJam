@@ -12,10 +12,8 @@ extends StateHelper
 @export var jump_state: State
 
 var dir: float = 0
+var last_dir: float = 1
 var look_dir: float = 1
-
-signal jump_cancel
-signal jump
 
 func _physics_process(delta):
 	get_direction()
@@ -24,13 +22,14 @@ func _physics_process(delta):
 		ct.start()
 	if Input.is_action_just_pressed("jump"):
 		ib.start()
-		jump.emit()
-	if Input.is_action_just_released("jump"):
-		jump_cancel.emit()
 
 
 func get_direction():
 	dir = Input.get_axis("left","right")
+	if dir != 0:
+		last_dir = dir
+	else:
+		last_dir = look_dir
 
 
 func set_body_look_direction():

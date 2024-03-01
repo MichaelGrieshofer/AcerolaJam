@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm53d1ff6nlr0"]
+
+[ext_resource type="Script" path="res://Scripts/character_after_image.gd" id="1_sr0dx"]
+[ext_resource type="Texture2D" uid="uid://y1a1aisjtms8" path="res://Textures/Sprites/player_character_sheet.png" id="2_8p1mt"]
+
+[node name="CharacterAfterImage" type="Node2D"]
+top_level = true
+script = ExtResource("1_sr0dx")
+
+[node name="PlayerCharacterSheet" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.337255)
+texture = ExtResource("2_8p1mt")
+hframes = 4
+vframes = 4
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

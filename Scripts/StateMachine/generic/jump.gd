@@ -1,3 +1,4 @@
+class_name JumpState
 extends State
 
 @export var jump_height: float = 200
@@ -7,12 +8,9 @@ extends State
 @export var speed: float = 90
 
 
-func set_helper(new_helper):
-	super(new_helper)
-	helper.jump_cancel.connect(jump_cancel)
-
-
 func enter_state():
+	super()
+	helper.ct.stop()
 	actor.velocity.y = -jump_height
 
 
@@ -20,6 +18,8 @@ func physics_update(delta):
 	actor.velocity.y += gravity * delta
 	if actor.velocity.y >= 0:
 		switch_state.emit(helper.fall_state)
+	if Input.is_action_just_released("jump"):
+		jump_cancel()
 	air_control()
 	actor.move_and_slide()
 

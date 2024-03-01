@@ -1,18 +1,167 @@
-[gd_scene load_steps=13 format=3 uid="uid://cp3dx60c3mnkf"]
+[gd_scene load_steps=26 format=3 uid="uid://cp3dx60c3mnkf"]
 
 [ext_resource type="Script" path="res://Scripts/player_interaction_area.gd" id="1_bfou5"]
-[ext_resource type="Texture2D" uid="uid://bac8oj8v1ki25" path="res://Textures/Sprites/player_placeholder.png" id="1_u7ihi"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_is6j2"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/generic/idle.gd" id="3_70r22"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/generic/walk.gd" id="4_3i1dh"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/generic/fall.gd" id="5_lwehy"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/generic/jump.gd" id="6_d6ac8"]
+[ext_resource type="Texture2D" uid="uid://y1a1aisjtms8" path="res://Textures/Sprites/player_character_sheet.png" id="2_j17j1"]
+[ext_resource type="Script" path="res://Nodes/Effects/sprite_trail.gd" id="3_ffdkt"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/player_idle.gd" id="4_kgbw8"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/player_walk.gd" id="5_jg8r2"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/player_fall.gd" id="6_dtsie"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/player_helper.gd" id="7_30uh2"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/player_jump.gd" id="7_805y4"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/dive_kick.gd" id="8_up38m"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="9_nlr2q"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/wall_surf.gd" id="9_tol0b"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_0na88"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/surf.gd" id="10_ukss2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(5, 15)
+
+[sub_resource type="Animation" id="Animation_j1gq8"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_4obnk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_px88l"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_3u7k4"]
+resource_name = "jump"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_7nm6j"]
+resource_name = "fall"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_rpfav"]
+resource_name = "surf"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_xe5fs"]
+resource_name = "surf_up"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_iqil0"]
+resource_name = "dive_kick"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dmqsg"]
+_data = {
+"RESET": SubResource("Animation_4obnk"),
+"dive_kick": SubResource("Animation_iqil0"),
+"fall": SubResource("Animation_7nm6j"),
+"idle": SubResource("Animation_j1gq8"),
+"jump": SubResource("Animation_3u7k4"),
+"surf": SubResource("Animation_rpfav"),
+"surf_up": SubResource("Animation_xe5fs"),
+"walk": SubResource("Animation_px88l")
+}
 
 [sub_resource type="Resource" id="Resource_mqesb"]
 script = ExtResource("10_0na88")
@@ -22,6 +171,7 @@ ease = 2
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 0
+safe_margin = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -39,7 +189,21 @@ shape = SubResource("RectangleShape2D_c5opg")
 debug_color = Color(0.658824, 0.431373, 0.733333, 0.419608)
 
 [node name="PlayerPlaceholder" type="Sprite2D" parent="."]
-texture = ExtResource("1_u7ihi")
+texture_filter = 5
+texture = ExtResource("2_j17j1")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerPlaceholder"]
+libraries = {
+"": SubResource("AnimationLibrary_dmqsg")
+}
+autoplay = "idle"
+
+[node name="SpriteTrail" type="Node2D" parent="PlayerPlaceholder"]
+unique_name_in_owner = true
+script = ExtResource("3_ffdkt")
+every_x_frames = 5
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state", "actor", "helper")]
 script = ExtResource("2_is6j2")
@@ -47,28 +211,125 @@ state = NodePath("Idle")
 actor = NodePath("..")
 helper = NodePath("PlayerHelper")
 
-[node name="Idle" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("3_70r22")
+[node name="Idle" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("4_kgbw8")
 deceleration = 0.3
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "idle"
 
-[node name="Walk" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("4_3i1dh")
+[node name="Walk" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("5_jg8r2")
 acceleration = 0.2
-speed = 60.0
+speed = 70.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "walk"
 
-[node name="Fall" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("5_lwehy")
+[node name="Fall" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("6_dtsie")
 gravity = 400.0
-speed = 60.0
+speed = 70.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "fall"
 
-[node name="Jump" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("6_d6ac8")
-jump_height = 150.0
+[node name="Jump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("7_805y4")
+jump_height = 160.0
 gravity = 400.0
-speed = 60.0
+speed = 70.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "jump"
 
-[node name="PlayerHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("ct", "ib", "body", "idle_state", "walk_state", "fall_state", "jump_state")]
+[node name="DoubleJump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("7_805y4")
+jump_height = 140.0
+gravity = 400.0
+jump_cancel_reduction = 0.85
+speed = 70.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "jump"
+
+[node name="DiveRebound" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("7_805y4")
+dive_kick_cancelable = false
+jump_height = 100.0
+gravity = 400.0
+jump_cancel_reduction = 1.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "jump"
+
+[node name="DiveKick" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("8_up38m")
+horizontal_speed = 120.0
+dive_into_surf_momentum_loss = 0.5
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "dive_kick"
+
+[node name="WallJump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("7_805y4")
+from_wall = true
+dive_kick_cancelable = false
+jump_height = 130.0
+gravity = 370.0
+jump_cancel_reduction = 1.0
+acceleration = 0.04
+speed = 30.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "jump"
+
+[node name="WallSurf" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("9_tol0b")
+acceleration = 0.1
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "surf_up"
+
+[node name="Surf" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("10_ukss2")
+acceleration = 0.03
+speed = 130.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "surf"
+
+[node name="SurfJump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("7_805y4")
+surf = true
+jump_height = 165.0
+gravity = 400.0
+acceleration = 0.03
+speed = 130.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "jump"
+
+[node name="SurfFall" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("6_dtsie")
+surf = true
+gravity = 400.0
+acceleration = 0.03
+speed = 130.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "fall"
+
+[node name="SurfDoubleJump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("7_805y4")
+surf = true
+jump_height = 140.0
+gravity = 400.0
+jump_cancel_reduction = 0.85
+acceleration = 0.03
+speed = 130.0
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "jump"
+
+[node name="PlayerHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("double_jump_state", "dive_rebound_state", "dive_kick_state", "wall_jump_state", "wall_surf_state", "surf_state", "surf_jump_state", "surf_fall_state", "surf_double_jump_state", "ct", "ib", "body", "idle_state", "walk_state", "fall_state", "jump_state")]
 script = ExtResource("7_30uh2")
+double_jump_state = NodePath("../DoubleJump")
+dive_rebound_state = NodePath("../DiveRebound")
+dive_kick_state = NodePath("../DiveKick")
+wall_jump_state = NodePath("../WallJump")
+wall_surf_state = NodePath("../WallSurf")
+surf_state = NodePath("../Surf")
+surf_jump_state = NodePath("../SurfJump")
+surf_fall_state = NodePath("../SurfFall")
+surf_double_jump_state = NodePath("../SurfDoubleJump")
 ct = NodePath("../../CT")
 ib = NodePath("../../IB")
 body = NodePath("../../PlayerPlaceholder")

@@ -1,3 +1,4 @@
+class_name WalkState
 extends State
 
 @export var acceleration: float = 0.05

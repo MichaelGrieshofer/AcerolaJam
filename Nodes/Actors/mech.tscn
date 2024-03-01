@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/StateMachine/generic/idle.gd" id="3_uxhkv"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/generic/walk.gd" id="4_b18wj"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_helper.gd" id="5_2vjcb"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/generic/fall.gd" id="5_6cxx8"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_fall.gd" id="6_cddlp"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/generic/jump.gd" id="6_hjjk4"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/hover.gd" id="8_b1o0x"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="9_3er3h"]
@@ -51,17 +51,25 @@ script = ExtResource("3_uxhkv")
 
 [node name="Walk" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("4_b18wj")
+acceleration = 0.02
+speed = 200.0
 
 [node name="Fall" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("5_6cxx8")
+script = ExtResource("6_cddlp")
 acceleration = 0.01
+speed = 200.0
 
 [node name="Jump" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("6_hjjk4")
 acceleration = 0.01
+speed = 200.0
 
 [node name="Hover" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("8_b1o0x")
+propulsion = 250.0
+max_propulsion = 200.0
+acceleration = 0.02
+speed = 200.0
 
 [node name="MechHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("hover_state", "ct", "ib", "body", "idle_state", "walk_state", "fall_state", "jump_state")]
 script = ExtResource("5_2vjcb")
@@ -88,7 +96,7 @@ position = Vector2(0, -30)
 script = ExtResource("9_3er3h")
 priority_override = false
 priority = 0
-zoom = Vector2(1, 1)
+zoom = Vector2(0.75, 0.75)
 follow_mode = 2
 follow_target = NodePath("..")
 follow_parameters/target_offset = Vector2(0, -30)

@@ -1,6 +1,9 @@
 class_name State
 extends Node
 
+@export var anim: AnimationPlayer = null
+@export var animation: String
+
 var actor: Node = null
 var helper: Node = null
 
@@ -14,7 +17,8 @@ func set_helper(new_helper):
 	helper = new_helper
 
 func enter_state():
-	pass
+	if anim != null:
+		anim.play(animation)
 
 
 func exit_state():
