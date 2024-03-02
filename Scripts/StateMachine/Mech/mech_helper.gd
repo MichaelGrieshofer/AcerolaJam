@@ -12,7 +12,7 @@ func _ready():
 func _physics_process(delta):
 	if piloted:
 		super(delta)
-		if Input.is_action_just_pressed("down"):
+		if Input.is_action_just_pressed("down") or Input.is_action_just_pressed("jdown"):
 			piloted = false
 			dir = 0.0
 			state_machine.change_state(idle_state)

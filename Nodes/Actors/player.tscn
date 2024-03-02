@@ -260,7 +260,7 @@ animation = "jump"
 [node name="DiveKick" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
 script = ExtResource("8_up38m")
 horizontal_speed = 120.0
-dive_into_surf_momentum_loss = 0.5
+dive_into_surf_momentum_loss = 0.8
 anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
 animation = "dive_kick"
 
@@ -285,7 +285,7 @@ animation = "surf_up"
 [node name="Surf" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
 script = ExtResource("10_ukss2")
 acceleration = 0.03
-speed = 130.0
+speed = 140.0
 anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
 animation = "surf"
 

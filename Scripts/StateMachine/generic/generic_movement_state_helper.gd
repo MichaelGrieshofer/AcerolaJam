@@ -20,12 +20,15 @@ func _physics_process(delta):
 	set_body_look_direction()
 	if actor.is_on_floor():
 		ct.start()
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jjump"):
 		ib.start()
 
 
 func get_direction():
 	dir = Input.get_axis("left","right")
+	var controller_dir = Input.get_axis("jleft","jright")
+	dir = dir+controller_dir
+	dir = clamp(dir,-1,1)
 	if dir != 0:
 		last_dir = dir
 	else:

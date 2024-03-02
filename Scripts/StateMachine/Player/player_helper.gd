@@ -23,7 +23,7 @@ func _ready():
 
 func _physics_process(delta):
 	super(delta)
-	if Input.is_action_just_pressed("up") and interaction.in_mech_area:
+	if (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("jup")) and interaction.in_mech_area:
 		state_machine.active = false
 		dir = 0.0
 		pcam.set_priority(0)

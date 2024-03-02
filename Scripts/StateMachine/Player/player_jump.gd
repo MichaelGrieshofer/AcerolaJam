@@ -21,15 +21,15 @@ func exit_state():
 
 func physics_update(delta):
 	super(delta)
-	if actor.velocity.y >= 0 and surf and Input.is_action_pressed("surf"):
+	if actor.velocity.y >= 0 and surf and (Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf")):
 		switch_state.emit(helper.surf_fall_state)
-	if Input.is_action_just_pressed("jump") and helper.has_double_jump and Input.is_action_pressed("surf") and surf:
+	if (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jjump")) and helper.has_double_jump and (Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf")) and surf:
 		helper.has_double_jump = false
 		switch_state.emit(helper.surf_double_jump_state)
-	if Input.is_action_just_pressed("jump") and helper.has_double_jump:
+	if (Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jjump")) and helper.has_double_jump:
 		helper.has_double_jump = false
 		switch_state.emit(helper.double_jump_state)
-	if Input.is_action_just_pressed("divekick") and dive_kick_cancelable:
+	if (Input.is_action_just_pressed("divekick") or Input.is_action_just_pressed("jdivekick")) and dive_kick_cancelable:
 		switch_state.emit(helper.dive_kick_state)
-	if actor.is_on_wall() and Input.is_action_pressed("surf"):
+	if actor.is_on_wall() and (Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf")):
 		switch_state.emit(helper.wall_surf_state)

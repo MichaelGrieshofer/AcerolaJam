@@ -10,7 +10,7 @@ func physics_update(delta):
 	actor.velocity.y -= propulsion * delta
 	if actor.velocity.y <= -max_propulsion:
 		actor.velocity.y = -max_propulsion
-	if Input.is_action_just_released("jump"):
+	if Input.is_action_just_released("jump") or Input.is_action_just_released("jjump"):
 		end_hover()
 	air_control()
 	actor.move_and_slide()

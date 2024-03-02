@@ -43,7 +43,7 @@ editor_draw_drag_margin = true
 script = ExtResource("4_liua7")
 
 [node name="FullScreenRain" parent="Camera2D" instance=ExtResource("3_1rbyl")]
-position = Vector2(-160, -170)
+position = Vector2(-160, -274)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_bnq2a")
