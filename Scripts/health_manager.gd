@@ -2,6 +2,7 @@ class_name HealthManager
 extends Node
 
 @export var max_health: float = 100
+@export var print_health: bool = false
 
 signal health_modified(amount,new_hp)
 signal took_damage(amount,new_hp)
@@ -13,6 +14,11 @@ var current_hp: float = 0
 
 func _ready():
 	set_health(max_health)
+
+
+func _physics_process(delta):
+	if print_health:
+		print(current_hp)
 
 
 func set_health(new_health):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dgwl4eqvyxrj5"]
+[gd_scene load_steps=17 format=3 uid="uid://dgwl4eqvyxrj5"]
 
 [ext_resource type="Script" path="res://Scripts/garage_manager.gd" id="1_katt5"]
 [ext_resource type="PackedScene" uid="uid://cp3dx60c3mnkf" path="res://Nodes/Actors/player.tscn" id="3_apey8"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://criwhfmnncdam" path="res://Textures/Sprites/mech-Sheet.png" id="4_vhe7o"]
 [ext_resource type="Texture2D" uid="uid://b2gx0i6dltffx" path="res://Textures/Sprites/arm_cannon.png" id="5_lg86n"]
 [ext_resource type="PackedScene" uid="uid://ckpy45jle6oy1" path="res://Nodes/Objects/activated_transition_area.tscn" id="6_myopu"]
+[ext_resource type="Script" path="res://Scripts/indoor_area.gd" id="7_lpr4u"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_j8oye"]
 a = Vector2(-88, -32)
@@ -22,6 +23,33 @@ b = Vector2(-88, 31)
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_4fkt6"]
 a = Vector2(-88, 32)
 b = Vector2(-88, -32)
+
+[sub_resource type="Animation" id="Animation_fj8n4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Arm:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_ca258"]
 resource_name = "idle"
@@ -51,33 +79,6 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(0, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_fj8n4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Arm:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3e2t3"]
 _data = {
 "RESET": SubResource("Animation_fj8n4"),
@@ -86,6 +87,9 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ooeis"]
 size = Vector2(10, 16)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_npixa"]
+polygon = PackedVector2Array(-160, -168, -160, 96, 160, 96, 160, -168)
 
 [node name="Garage" type="Node2D"]
 script = ExtResource("1_katt5")
@@ -155,3 +159,19 @@ exit_pos_node = NodePath("ExitPosition")
 [node name="@CollisionShape2D@86699" type="CollisionShape2D" parent="TransitionArea"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ooeis")
+
+[node name="InsideArea" type="Polygon2D" parent="."]
+visible = false
+color = Color(0.27451, 0.27451, 0.27451, 0.278431)
+polygon = PackedVector2Array(-160, -168, -160, 96, 160, 96, 160, -168)
+script = ExtResource("7_lpr4u")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="InsideArea" groups=["Inside"]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InsideArea/Area2D"]
+polygon = PackedVector2Array(-160, -168, -160, 96, 160, 96, 160, -168)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="InsideArea"]
+occluder = SubResource("OccluderPolygon2D_npixa")

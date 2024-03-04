@@ -3,6 +3,7 @@ extends GenericMovementStateHelper
 @onready var interaction = %Interaction
 @onready var pcam = %PhantomCamera2D
 @onready var after_image = %SpriteTrail
+@onready var health = %HealthManager
 
 @export var double_jump_state: State
 @export var dive_rebound_state: State
@@ -15,7 +16,10 @@ extends GenericMovementStateHelper
 @export var surf_double_jump_state: State
 @export var bouble_jump_state: State
 
+@export var rain_damage: float = 5
+
 var has_double_jump: bool = true
+var in_mech: bool = false
 
 func _ready():
 	pcam.set_priority(1)
@@ -30,6 +34,10 @@ func place(pos):
 
 func _physics_process(delta):
 	super(delta)
+	if !in_mech and !interaction.in_inside_area:
+		health.modify_health(-rain_damage*delta)
+	elif in_mech and !interaction.in_inside_area:
+		health.modify_health(rain_damage*delta)
 	if (Input.is_action_just_pressed("enter_mech") or Input.is_action_just_pressed("jenter_mech")) and interaction.in_mech_area:
 		enter_mech()
 	if actor.is_on_floor():
@@ -37,6 +45,7 @@ func _physics_process(delta):
 
 
 func enter_mech():
+	in_mech = true
 	state_machine.active = false
 	actor.global_position = Vector2.DOWN*1000000
 	dir = 0.0
@@ -48,6 +57,7 @@ func enter_mech():
 
 
 func leave_mech(position):
+	in_mech = false
 	pcam.set_priority(1)
 	actor.global_position = position
 	actor.velocity = Vector2(0,0)
@@ -58,3 +68,7 @@ func leave_mech(position):
 
 func toggle_after_image(active):
 	after_image.emitting = active
+
+
+func _on_health_manager_health_depleted():
+	Transition.load_level()
