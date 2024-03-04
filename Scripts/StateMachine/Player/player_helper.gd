@@ -13,6 +13,7 @@ extends GenericMovementStateHelper
 @export var surf_jump_state: State
 @export var surf_fall_state: State
 @export var surf_double_jump_state: State
+@export var bouble_jump_state: State
 
 var has_double_jump: bool = true
 

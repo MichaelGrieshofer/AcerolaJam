@@ -13,6 +13,7 @@ func enter_state():
 
 
 func exit_state():
+	super()
 	helper.toggle_after_image(false)
 
 
@@ -40,3 +41,10 @@ func physics_update(delta):
 			switch_state.emit(helper.double_jump_state)
 	
 	actor.move_and_slide()
+
+
+func _on_interaction_bubble_entered(area):
+	if active:
+		helper.has_double_jump = true
+		area.pop.call_deferred()
+		switch_state.emit(helper.bouble_jump_state)

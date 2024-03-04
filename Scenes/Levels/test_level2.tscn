@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ccy1ymm8byy4x"]
+[gd_scene load_steps=15 format=3 uid="uid://ccy1ymm8byy4x"]
 
 [ext_resource type="Texture2D" uid="uid://b5ucygh6oia4" path="res://Textures/Sprites/test_tile.png" id="1_iyfxc"]
 [ext_resource type="Script" path="res://Scripts/level_manager.gd" id="1_xqgud"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dt2w51e2i06bw" path="res://Nodes/Objects/transition_area.tscn" id="6_dbfk4"]
 [ext_resource type="PackedScene" uid="uid://ckpy45jle6oy1" path="res://Nodes/Objects/activated_transition_area.tscn" id="8_xs8qj"]
 [ext_resource type="PackedScene" uid="uid://csab251k2o00q" path="res://Nodes/Objects/garage.tscn" id="9_rsqtw"]
+[ext_resource type="PackedScene" uid="uid://0ijumir83wg8" path="res://Nodes/Objects/bubble.tscn" id="10_f72a0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_elpjc"]
 texture = ExtResource("1_iyfxc")
@@ -85,3 +86,6 @@ tag = "test_garage"
 [node name="Garage2" parent="." instance=ExtResource("9_rsqtw")]
 position = Vector2(1576, 96)
 tag = "test_garage2"
+
+[node name="Bubble" parent="." instance=ExtResource("10_f72a0")]
+position = Vector2(1240, 176)

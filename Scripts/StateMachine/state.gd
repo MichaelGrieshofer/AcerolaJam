@@ -6,6 +6,7 @@ extends Node
 
 var actor: Node = null
 var helper: Node = null
+var active: bool = false
 
 signal switch_state(new_state)
 
@@ -17,12 +18,13 @@ func set_helper(new_helper):
 	helper = new_helper
 
 func enter_state():
+	active = true
 	if anim != null:
 		anim.play(animation)
 
 
 func exit_state():
-	pass
+	active = false
 
 
 func physics_update(delta):
