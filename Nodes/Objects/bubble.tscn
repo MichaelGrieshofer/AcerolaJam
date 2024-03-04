@@ -3,6 +3,21 @@
 [ext_resource type="Script" path="res://Scripts/bubble.gd" id="1_0w54d"]
 [ext_resource type="Texture2D" uid="uid://dikjafpbhk8pd" path="res://Textures/Sprites/bubble-Sheet.png" id="1_a6v0b"]
 
+[sub_resource type="Animation" id="Animation_lqt3n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_cegyo"]
 resource_name = "idle"
 length = 0.6
@@ -20,8 +35,9 @@ tracks/0/keys = {
 "values": [0, 1, 2]
 }
 
-[sub_resource type="Animation" id="Animation_lqt3n"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_kvc5i"]
+resource_name = "linger"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -29,10 +45,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0]
+"values": [6, 7]
 }
 
 [sub_resource type="Animation" id="Animation_e10gm"]
@@ -52,22 +68,6 @@ tracks/0/keys = {
 "values": [3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_kvc5i"]
-resource_name = "linger"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [6, 7]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qalid"]
 _data = {
 "RESET": SubResource("Animation_lqt3n"),
@@ -80,6 +80,7 @@ _data = {
 radius = 8.0
 
 [node name="Bubble" type="Area2D"]
+z_index = -1
 script = ExtResource("1_0w54d")
 
 [node name="Bubble" type="Sprite2D" parent="."]

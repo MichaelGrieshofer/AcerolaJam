@@ -1,0 +1,20 @@
+[gd_resource type="AnimatedTexture" load_steps=6 format=3 uid="uid://kbk400fyjleb"]
+
+[ext_resource type="Texture2D" uid="uid://dvh2ehryq7l0q" path="res://Textures/Sprites/coral_line1.png" id="1_woycp"]
+[ext_resource type="Texture2D" uid="uid://rbv00ats254v" path="res://Textures/Sprites/coral_line2.png" id="2_g0u4n"]
+[ext_resource type="Texture2D" uid="uid://b7dc5raj6jix2" path="res://Textures/Sprites/coral_line3.png" id="3_e6rfm"]
+[ext_resource type="Texture2D" uid="uid://cv6g13ooka324" path="res://Textures/Sprites/coral_line4.png" id="4_nikiq"]
+[ext_resource type="Texture2D" uid="uid://whnt5qwocsep" path="res://Textures/Sprites/coral_line5.png" id="5_8g8yv"]
+
+[resource]
+frames = 5
+frame_0/texture = ExtResource("1_woycp")
+frame_0/duration = 0.1
+frame_1/texture = ExtResource("2_g0u4n")
+frame_1/duration = 0.1
+frame_2/texture = ExtResource("3_e6rfm")
+frame_2/duration = 0.1
+frame_3/texture = ExtResource("4_nikiq")
+frame_3/duration = 0.1
+frame_4/texture = ExtResource("5_8g8yv")
+frame_4/duration = 0.1

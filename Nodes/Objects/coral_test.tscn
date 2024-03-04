@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://hk8xqk561136"]
+
+[ext_resource type="Texture2D" uid="uid://kbk400fyjleb" path="res://Textures/Sprites/coral_line.tres" id="1_6bc85"]
+[ext_resource type="Script" path="res://Scripts/coral.gd" id="2_8kofe"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_18v81"]
+a = Vector2(96, -48)
+b = Vector2(64, 80)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_bx1p1"]
+a = Vector2(64, 80)
+b = Vector2(80, 136)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ofrg6"]
+a = Vector2(80, 136)
+b = Vector2(176, 168)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_cwt41"]
+a = Vector2(176, 168)
+b = Vector2(240, 152)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_xjeb5"]
+a = Vector2(240, 152)
+b = Vector2(256, 96)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_bkdfx"]
+a = Vector2(256, 96)
+b = Vector2(240, 16)
+
+[node name="CoralTest" type="Line2D"]
+z_index = -1
+texture_repeat = 2
+points = PackedVector2Array(96, -48, 64, 80, 80, 136, 176, 168, 240, 152, 256, 96, 240, 16)
+width = 16.0
+texture = ExtResource("1_6bc85")
+texture_mode = 1
+script = ExtResource("2_8kofe")
+metadata/_edit_group_ = true
+
+[node name="@Area2D@57707" type="Area2D" parent="." groups=["Danger"]]
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="@Area2D@57707"]
+shape = SubResource("SegmentShape2D_18v81")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="@Area2D@57707"]
+shape = SubResource("SegmentShape2D_bx1p1")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="@Area2D@57707"]
+shape = SubResource("SegmentShape2D_ofrg6")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="@Area2D@57707"]
+shape = SubResource("SegmentShape2D_cwt41")
+
+[node name="CollisionShape5" type="CollisionShape2D" parent="@Area2D@57707"]
+shape = SubResource("SegmentShape2D_xjeb5")
+
+[node name="CollisionShape6" type="CollisionShape2D" parent="@Area2D@57707"]
+shape = SubResource("SegmentShape2D_bkdfx")
+
+[connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]

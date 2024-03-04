@@ -162,7 +162,7 @@ shape = SubResource("RectangleShape2D_ooeis")
 
 [node name="InsideArea" type="Polygon2D" parent="."]
 visible = false
-color = Color(0.27451, 0.27451, 0.27451, 0.278431)
+color = Color(31, 31, 31, 139)
 polygon = PackedVector2Array(-160, -168, -160, 96, 160, 96, 160, -168)
 script = ExtResource("7_lpr4u")
 metadata/_edit_group_ = true

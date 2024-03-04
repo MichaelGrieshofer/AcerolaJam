@@ -83,6 +83,7 @@ shape = SubResource("RectangleShape2D_8vdgm")
 
 [node name="Garage" parent="." instance=ExtResource("10_4xlhi")]
 position = Vector2(-48, 160)
+tag = "GIB EINEN NAMEN EIN DU DUMME KUH"
 
 [node name="IndoorArea" type="Polygon2D" parent="."]
 visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ccy1ymm8byy4x"]
+[gd_scene load_steps=37 format=3 uid="uid://ccy1ymm8byy4x"]
 
 [ext_resource type="Texture2D" uid="uid://b5ucygh6oia4" path="res://Textures/Sprites/test_tile.png" id="1_iyfxc"]
 [ext_resource type="Script" path="res://Scripts/level_manager.gd" id="1_xqgud"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://ckpy45jle6oy1" path="res://Nodes/Objects/activated_transition_area.tscn" id="8_xs8qj"]
 [ext_resource type="PackedScene" uid="uid://csab251k2o00q" path="res://Nodes/Objects/garage.tscn" id="9_rsqtw"]
 [ext_resource type="PackedScene" uid="uid://0ijumir83wg8" path="res://Nodes/Objects/bubble.tscn" id="10_f72a0"]
+[ext_resource type="Texture2D" uid="uid://kbk400fyjleb" path="res://Textures/Sprites/coral_line.tres" id="11_1u6wo"]
+[ext_resource type="Script" path="res://Scripts/coral.gd" id="12_2ywso"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_elpjc"]
 texture = ExtResource("1_iyfxc")
@@ -27,6 +29,86 @@ size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_njbq4"]
 size = Vector2(32, 48)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_3gwdk"]
+a = Vector2(1056, 128)
+b = Vector2(1096, 144)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_lpspo"]
+a = Vector2(1096, 144)
+b = Vector2(1128, 128)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_6mth0"]
+a = Vector2(1128, 128)
+b = Vector2(1184, 120)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5sccs"]
+a = Vector2(1184, 120)
+b = Vector2(1248, 128)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_p8dug"]
+a = Vector2(1248, 128)
+b = Vector2(1304, 112)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_jy70o"]
+a = Vector2(1304, 112)
+b = Vector2(1296, 80)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_y7yuc"]
+a = Vector2(1296, 80)
+b = Vector2(1272, 48)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_bw8ir"]
+a = Vector2(1272, 48)
+b = Vector2(1296, 48)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_t7g50"]
+a = Vector2(1296, 48)
+b = Vector2(1304, 16)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_6j3oo"]
+a = Vector2(1304, 16)
+b = Vector2(1336, 8)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ojbvh"]
+a = Vector2(1336, 8)
+b = Vector2(1360, 40)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5sevh"]
+a = Vector2(1360, 40)
+b = Vector2(1368, 64)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_37kwu"]
+a = Vector2(1368, 64)
+b = Vector2(1352, 80)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_048uu"]
+a = Vector2(1352, 80)
+b = Vector2(1336, 112)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_wf0y3"]
+a = Vector2(1336, 112)
+b = Vector2(1352, 128)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_an85c"]
+a = Vector2(1352, 128)
+b = Vector2(1368, 136)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_87loh"]
+a = Vector2(1368, 136)
+b = Vector2(1424, 136)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_0ocqh"]
+a = Vector2(1424, 136)
+b = Vector2(1432, 96)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5igpq"]
+a = Vector2(1432, 96)
+b = Vector2(1464, 128)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_iod01"]
+a = Vector2(1464, 128)
+b = Vector2(1480, 144)
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("1_xqgud")
@@ -89,3 +171,75 @@ tag = "test_garage2"
 
 [node name="Bubble" parent="." instance=ExtResource("10_f72a0")]
 position = Vector2(1240, 176)
+
+[node name="CoralLine" type="Line2D" parent="."]
+z_index = -1
+texture_repeat = 2
+points = PackedVector2Array(1056, 128, 1096, 144, 1128, 128, 1184, 120, 1248, 128, 1304, 112, 1296, 80, 1272, 48, 1296, 48, 1304, 16, 1336, 8, 1360, 40, 1368, 64, 1352, 80, 1336, 112, 1352, 128, 1368, 136, 1424, 136, 1432, 96, 1464, 128, 1480, 144)
+width = 16.0
+texture = ExtResource("11_1u6wo")
+texture_mode = 1
+script = ExtResource("12_2ywso")
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="CoralLine" groups=["Danger"]]
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_3gwdk")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_lpspo")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_6mth0")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_5sccs")
+
+[node name="CollisionShape5" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_p8dug")
+
+[node name="CollisionShape6" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_jy70o")
+
+[node name="CollisionShape7" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_y7yuc")
+
+[node name="CollisionShape8" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_bw8ir")
+
+[node name="CollisionShape9" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_t7g50")
+
+[node name="CollisionShape10" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_6j3oo")
+
+[node name="CollisionShape11" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_ojbvh")
+
+[node name="CollisionShape12" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_5sevh")
+
+[node name="CollisionShape13" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_37kwu")
+
+[node name="CollisionShape14" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_048uu")
+
+[node name="CollisionShape15" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_wf0y3")
+
+[node name="CollisionShape16" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_an85c")
+
+[node name="CollisionShape17" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_87loh")
+
+[node name="CollisionShape18" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_0ocqh")
+
+[node name="CollisionShape19" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_5igpq")
+
+[node name="CollisionShape20" type="CollisionShape2D" parent="CoralLine/Area2D"]
+shape = SubResource("SegmentShape2D_iod01")
