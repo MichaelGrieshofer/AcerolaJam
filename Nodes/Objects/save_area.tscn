@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce3ua803rno83"]
+
+[ext_resource type="Script" path="res://Scripts/save_area.gd" id="1_o3syk"]
+
+[node name="SaveArea" type="Area2D"]
+script = ExtResource("1_o3syk")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

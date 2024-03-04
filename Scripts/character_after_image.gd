@@ -1,12 +1,5 @@
-extends Node2D
-
-@onready var sprite = $PlayerCharacterSheet
-
-var frame: int = 0
-
-func _ready():
-	sprite.frame = frame
+extends Sprite2D
 
 
-func _on_timer_timeout():
+func _on_animation_player_animation_finished(anim_name):
 	queue_free()

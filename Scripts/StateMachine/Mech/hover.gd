@@ -8,10 +8,16 @@ extends State
 
 func physics_update(delta):
 	actor.velocity.y -= propulsion * delta
+	
 	if actor.velocity.y <= -max_propulsion:
 		actor.velocity.y = -max_propulsion
-	if Input.is_action_just_released("jump") or Input.is_action_just_released("jjump"):
+	
+	if Input.is_action_just_released("jump") or Input.is_action_just_released("jboost"):
 		end_hover()
+	
+	if (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jdash")) and helper.piloted:
+		switch_state.emit(helper.dash_state)
+	
 	air_control()
 	actor.move_and_slide()
 

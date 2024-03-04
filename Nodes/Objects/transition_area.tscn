@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt2w51e2i06bw"]
+
+[ext_resource type="Script" path="res://Scripts/transition_area.gd" id="1_jhju8"]
+
+[node name="TransitionArea" type="Area2D"]
+script = ExtResource("1_jhju8")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

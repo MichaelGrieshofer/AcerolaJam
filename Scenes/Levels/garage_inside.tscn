@@ -1,0 +1,157 @@
+[gd_scene load_steps=15 format=3 uid="uid://dgwl4eqvyxrj5"]
+
+[ext_resource type="Script" path="res://Scripts/garage_manager.gd" id="1_katt5"]
+[ext_resource type="PackedScene" uid="uid://cp3dx60c3mnkf" path="res://Nodes/Actors/player.tscn" id="3_apey8"]
+[ext_resource type="Texture2D" uid="uid://cvfg248wvlb1g" path="res://Textures/Sprites/garage_inside.png" id="3_mxiaq"]
+[ext_resource type="Texture2D" uid="uid://criwhfmnncdam" path="res://Textures/Sprites/mech-Sheet.png" id="4_vhe7o"]
+[ext_resource type="Texture2D" uid="uid://b2gx0i6dltffx" path="res://Textures/Sprites/arm_cannon.png" id="5_lg86n"]
+[ext_resource type="PackedScene" uid="uid://ckpy45jle6oy1" path="res://Nodes/Objects/activated_transition_area.tscn" id="6_myopu"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_j8oye"]
+a = Vector2(-88, -32)
+b = Vector2(88, -32)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_dnr2x"]
+a = Vector2(88, 32)
+b = Vector2(88, -32)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_yaprb"]
+a = Vector2(88, 31)
+b = Vector2(-88, 31)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_4fkt6"]
+a = Vector2(-88, 32)
+b = Vector2(-88, -32)
+
+[sub_resource type="Animation" id="Animation_ca258"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Arm:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fj8n4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Arm:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3e2t3"]
+_data = {
+"RESET": SubResource("Animation_fj8n4"),
+"idle": SubResource("Animation_ca258")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooeis"]
+size = Vector2(10, 16)
+
+[node name="Garage" type="Node2D"]
+script = ExtResource("1_katt5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -3
+offset_left = -216.0
+offset_top = -200.0
+offset_right = 216.0
+offset_bottom = 144.0
+color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="." instance=ExtResource("3_apey8")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -30)
+drag_vertical_enabled = true
+editor_draw_drag_margin = true
+
+[node name="GarageInside" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("3_mxiaq")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+shape = SubResource("SegmentShape2D_j8oye")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+shape = SubResource("SegmentShape2D_dnr2x")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+shape = SubResource("SegmentShape2D_yaprb")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+shape = SubResource("SegmentShape2D_4fkt6")
+
+[node name="Mech-sheet" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(49, -3)
+texture = ExtResource("4_vhe7o")
+hframes = 13
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mech-sheet"]
+libraries = {
+"": SubResource("AnimationLibrary_3e2t3")
+}
+autoplay = "idle"
+
+[node name="Arm" type="Node2D" parent="Mech-sheet"]
+
+[node name="ArmCannon" type="Sprite2D" parent="Mech-sheet/Arm"]
+position = Vector2(-9.5, 4)
+texture = ExtResource("5_lg86n")
+
+[node name="TransitionArea" parent="." node_paths=PackedStringArray("exit_pos_node") instance=ExtResource("6_myopu")]
+position = Vector2(-4, 22)
+tag = "test_garage"
+exit_pos_node = NodePath("ExitPosition")
+
+[node name="ExitPosition" type="Node2D" parent="TransitionArea"]
+
+[node name="@CollisionShape2D@86699" type="CollisionShape2D" parent="TransitionArea"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ooeis")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cujs7atrpg0wo"]
 
-[ext_resource type="PackedScene" path="res://Nodes/UI/change_scene_button.tscn" id="1_jmsnh"]
+[ext_resource type="Script" path="res://Scripts/test_start_button.gd" id="1_vkmqb"]
 [ext_resource type="PackedScene" uid="uid://bshdlywrndgrc" path="res://Nodes/UI/screen_mode_button.tscn" id="2_oxtip"]
 [ext_resource type="PackedScene" uid="uid://cyfe4w5r44kjl" path="res://Nodes/UI/msaa.tscn" id="3_wc1u7"]
 [ext_resource type="PackedScene" uid="uid://ck05lremoogwd" path="res://Nodes/UI/taa.tscn" id="4_68cne"]
@@ -29,11 +29,14 @@ grow_vertical = 2
 [node name="Main" type="Control" parent="TabContainer"]
 layout_mode = 2
 
-[node name="ChangeSceneButton" parent="TabContainer/Main" instance=ExtResource("1_jmsnh")]
-layout_mode = 1
-text = "Start Game
-"
-scene = "res://Scenes/Levels/test_level.tscn"
+[node name="Button" type="Button" parent="TabContainer/Main"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 106.0
+offset_right = 173.0
+offset_bottom = 137.0
+text = "start"
+script = ExtResource("1_vkmqb")
 
 [node name="Graphics" type="Control" parent="TabContainer"]
 visible = false
@@ -192,3 +195,5 @@ layout_mode = 2
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_mdnqr")
 autoplay = true
+
+[connection signal="pressed" from="TabContainer/Main/Button" to="TabContainer/Main/Button" method="_on_pressed"]

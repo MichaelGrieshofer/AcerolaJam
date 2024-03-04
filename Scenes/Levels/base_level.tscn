@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1r337ggby23m"]
+
+[ext_resource type="Script" path="res://Scripts/level_manager.gd" id="1_iuk3l"]
+[ext_resource type="PackedScene" uid="uid://bnqlw7ldqlw8q" path="res://Nodes/Actors/mech.tscn" id="2_r5ih2"]
+[ext_resource type="PackedScene" uid="uid://cp3dx60c3mnkf" path="res://Nodes/Actors/player.tscn" id="3_ea3er"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_mmnk7"]
+[ext_resource type="PackedScene" uid="uid://c4uq5yampsad" path="res://Nodes/Effects/full_screen_rain.tscn" id="5_itehs"]
+
+[node name="LevelManager" type="Node2D"]
+script = ExtResource("1_iuk3l")
+
+[node name="Mech" parent="." instance=ExtResource("2_r5ih2")]
+
+[node name="Player" parent="." instance=ExtResource("3_ea3er")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -30)
+zoom = Vector2(0.75, 0.75)
+drag_vertical_enabled = true
+editor_draw_drag_margin = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+script = ExtResource("4_mmnk7")
+
+[node name="FullScreenRain" parent="Camera2D" instance=ExtResource("5_itehs")]
+position = Vector2(-160, -274)

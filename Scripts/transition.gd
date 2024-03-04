@@ -7,6 +7,14 @@ var next_scene = "res://Scenes/Levels/test_scene.tscn"
 @onready var anim = $AnimationPlayer
 @onready var color = $CanvasLayer/ColorRect
 
+var tag: String = ""
+var transition_active: bool = false
+var only_transition_player: bool = false
+var last_mech_area: String = ""
+var last_mech_position: Vector2 = Vector2.ZERO
+var last_garage_area: String = ""
+var last_garage_tag: String = ""
+
 
 func transition(scene: String = "res://Scenes/Levels/test_scene.tscn"):
 	anim.play("fade")

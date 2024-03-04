@@ -19,19 +19,31 @@ var has_double_jump: bool = true
 func _ready():
 	pcam.set_priority(1)
 	Signals.player_left_mech.connect(leave_mech)
+	Signals.place_player.connect(place)
+	Signals.pilot_mech.connect(enter_mech)
+
+
+func place(pos):
+	actor.global_position = pos
 
 
 func _physics_process(delta):
 	super(delta)
-	if (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("jup")) and interaction.in_mech_area:
-		state_machine.active = false
-		dir = 0.0
-		pcam.set_priority(0)
-		state_machine.change_state(idle_state)
-		actor.hide()
-		Signals.player_entered_mech.emit()
+	if (Input.is_action_just_pressed("enter_mech") or Input.is_action_just_pressed("jenter_mech")) and interaction.in_mech_area:
+		enter_mech()
 	if actor.is_on_floor():
 		has_double_jump = true
+
+
+func enter_mech():
+	state_machine.active = false
+	actor.global_position = Vector2.DOWN*1000000
+	dir = 0.0
+	pcam.set_priority(0)
+	state_machine.change_state(idle_state)
+	body.hide()
+	after_image.emitting = false
+	Signals.player_entered_mech.emit()
 
 
 func leave_mech(position):
@@ -40,7 +52,7 @@ func leave_mech(position):
 	actor.velocity = Vector2(0,0)
 	state_machine.active = true
 	state_machine.change_state(idle_state)
-	actor.show()
+	body.show()
 
 
 func toggle_after_image(active):
