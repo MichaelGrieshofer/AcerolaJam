@@ -48,6 +48,7 @@ func create_pos():
 	coll_shape.owner = get_tree().edited_scene_root
 	var new_shape = RectangleShape2D.new()
 	coll_shape.shape = new_shape
+	set_meta("_edit_group_", true)
 
 
 func _input(event):

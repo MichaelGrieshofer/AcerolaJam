@@ -10,3 +10,9 @@ signal place_player(pos)
 signal pilot_mech
 
 signal save_scene_path
+
+#UI
+
+signal player_health_changed
+signal mech_health_changed
+signal mech_fuel_changed

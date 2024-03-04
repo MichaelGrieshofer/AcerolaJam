@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cp3dx60c3mnkf"]
+[gd_scene load_steps=27 format=3 uid="uid://cp3dx60c3mnkf"]
 
 [ext_resource type="Script" path="res://Scripts/player_interaction_area.gd" id="1_bfou5"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_is6j2"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/wall_surf.gd" id="9_tol0b"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_0na88"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/surf.gd" id="10_ukss2"]
+[ext_resource type="Script" path="res://Scripts/health_manager.gd" id="15_tuhgk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(5, 15)
@@ -381,6 +382,9 @@ limit/smoothed = false
 tween_parameters = SubResource("Resource_mqesb")
 tween_on_load = true
 inactive_update_mode = 0
+
+[node name="HealthManager" type="Node" parent="."]
+script = ExtResource("15_tuhgk")
 
 [connection signal="area_entered" from="Interaction" to="Interaction" method="_on_area_entered"]
 [connection signal="area_exited" from="Interaction" to="Interaction" method="_on_area_exited"]
