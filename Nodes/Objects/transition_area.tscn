@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dt2w51e2i06bw"]
+[gd_scene load_steps=3 format=3 uid="uid://dt2w51e2i06bw"]
 
 [ext_resource type="Script" path="res://Scripts/transition_area.gd" id="1_jhju8"]
+[ext_resource type="PackedScene" uid="uid://c2dtdmn6cr6kk" path="res://Nodes/Objects/checkpoint.tscn" id="2_ajj7d"]
 
 [node name="TransitionArea" type="Area2D"]
 script = ExtResource("1_jhju8")
+
+[node name="Checkpoint" parent="." instance=ExtResource("2_ajj7d")]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

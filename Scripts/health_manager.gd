@@ -23,6 +23,7 @@ func _physics_process(delta):
 
 func set_health(new_health):
 	current_hp = new_health
+	health_modified.emit(current_hp,current_hp)
 
 
 func modify_health(amount):

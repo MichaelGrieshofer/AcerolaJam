@@ -12,6 +12,7 @@ var time: float = 0
 
 func enter_state():
 	super()
+	helper.water.modify_health(-helper.dash_cost)
 	after_image.emitting = true
 	after_image2.emitting = true
 	actor.velocity.y = 0

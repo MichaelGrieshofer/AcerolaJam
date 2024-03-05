@@ -386,9 +386,11 @@ inactive_update_mode = 0
 [node name="HealthManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("15_tuhgk")
-print_health = true
 
 [connection signal="area_entered" from="Interaction" to="Interaction" method="_on_area_entered"]
 [connection signal="area_exited" from="Interaction" to="Interaction" method="_on_area_exited"]
 [connection signal="bubble_entered" from="Interaction" to="FiniteStateMachine/DiveKick" method="_on_interaction_bubble_entered"]
+[connection signal="danger_zone_entered" from="Interaction" to="FiniteStateMachine/PlayerHelper" method="_on_interaction_danger_zone_entered"]
+[connection signal="danger_zone_entered" from="Interaction" to="HealthManager" method="modify_health"]
 [connection signal="health_depleted" from="HealthManager" to="FiniteStateMachine/PlayerHelper" method="_on_health_manager_health_depleted"]
+[connection signal="health_modified" from="HealthManager" to="FiniteStateMachine/PlayerHelper" method="_on_health_manager_health_modified"]

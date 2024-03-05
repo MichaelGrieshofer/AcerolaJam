@@ -86,7 +86,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ooeis"]
-size = Vector2(10, 16)
+size = Vector2(12, 18)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_npixa"]
 polygon = PackedVector2Array(-160, -168, -160, 96, 160, 96, 160, -168)
@@ -150,14 +150,14 @@ position = Vector2(-9.5, 4)
 texture = ExtResource("5_lg86n")
 
 [node name="TransitionArea" parent="." node_paths=PackedStringArray("exit_pos_node") instance=ExtResource("6_myopu")]
-position = Vector2(-4, 22)
+position = Vector2(0, 16)
 tag = "test_garage"
 exit_pos_node = NodePath("ExitPosition")
 
 [node name="ExitPosition" type="Node2D" parent="TransitionArea"]
 
 [node name="@CollisionShape2D@86699" type="CollisionShape2D" parent="TransitionArea"]
-position = Vector2(0, 1)
+position = Vector2(-4, 7)
 shape = SubResource("RectangleShape2D_ooeis")
 
 [node name="InsideArea" type="Polygon2D" parent="."]

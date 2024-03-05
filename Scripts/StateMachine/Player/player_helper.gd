@@ -17,6 +17,7 @@ extends GenericMovementStateHelper
 @export var bouble_jump_state: State
 
 @export var rain_damage: float = 5
+@export var health_regen: float = 20
 
 var has_double_jump: bool = true
 var in_mech: bool = false
@@ -37,7 +38,7 @@ func _physics_process(delta):
 	if !in_mech and !interaction.in_inside_area:
 		health.modify_health(-rain_damage*delta)
 	elif in_mech and !interaction.in_inside_area:
-		health.modify_health(rain_damage*delta)
+		health.modify_health(health_regen*delta)
 	if (Input.is_action_just_pressed("enter_mech") or Input.is_action_just_pressed("jenter_mech")) and interaction.in_mech_area:
 		enter_mech()
 	if actor.is_on_floor():
@@ -72,3 +73,11 @@ func toggle_after_image(active):
 
 func _on_health_manager_health_depleted():
 	Transition.load_level()
+
+
+func _on_interaction_danger_zone_entered(damage):
+	actor.global_position = Transition.last_checkpoint_pos
+
+
+func _on_health_manager_health_modified(amount, new_hp):
+	Signals.player_health_changed.emit(new_hp)

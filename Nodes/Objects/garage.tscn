@@ -27,7 +27,7 @@ position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_ucx34")
 
 [node name="TransitionArea" parent="." node_paths=PackedStringArray("exit_pos_node") instance=ExtResource("3_0medc")]
-position = Vector2(0, 40)
+position = Vector2(0, 32)
 target_scene = "res://Scenes/Levels/garage_inside.tscn"
 exit_pos_node = NodePath("ExitPosition")
 
@@ -35,8 +35,7 @@ exit_pos_node = NodePath("ExitPosition")
 position = Vector2(-4, 0)
 
 [node name="@CollisionShape2D@47669" type="CollisionShape2D" parent="TransitionArea"]
-visible = false
-position = Vector2(-4, -1)
+position = Vector2(-4, 7)
 shape = SubResource("RectangleShape2D_ydp8c")
 
 [connection signal="entered" from="TransitionArea" to="." method="_on_transition_area_entered"]

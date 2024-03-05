@@ -14,5 +14,8 @@ signal save_scene_path
 #UI
 
 signal player_health_changed
+signal max_player_health_changed
 signal mech_health_changed
+signal max_mech_health_changed
 signal mech_fuel_changed
+signal max_mech_fuel_changed

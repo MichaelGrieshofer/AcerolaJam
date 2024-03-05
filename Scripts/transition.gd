@@ -14,6 +14,7 @@ var last_mech_area: String = ""
 var last_mech_position: Vector2 = Vector2.ZERO
 var last_garage_area: String = ""
 var last_garage_tag: String = ""
+var last_checkpoint_pos: Vector2 = Vector2.ZERO
 
 
 func transition(scene: String = "res://Scenes/Levels/test_scene.tscn"):

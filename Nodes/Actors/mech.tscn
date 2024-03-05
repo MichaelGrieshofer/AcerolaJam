@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bnqlw7ldqlw8q"]
+[gd_scene load_steps=27 format=3 uid="uid://bnqlw7ldqlw8q"]
 
 [ext_resource type="Script" path="res://Scripts/mech_interaction_area.gd" id="1_a78nb"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_81wgb"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_jump.gd" id="10_tvxjy"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/dash.gd" id="12_bah7k"]
 [ext_resource type="PackedScene" uid="uid://cv3b24v635f6m" path="res://Nodes/Effects/sprite_trail.tscn" id="14_f6ux4"]
+[ext_resource type="Script" path="res://Scripts/health_manager.gd" id="16_k2uc4"]
+[ext_resource type="PackedScene" uid="uid://c2dtdmn6cr6kk" path="res://Nodes/Objects/checkpoint.tscn" id="17_fexau"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(24, 45)
@@ -351,3 +353,26 @@ inactive_update_mode = 0
 [node name="SpriteTrail" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_f6ux4")]
 every_x_frames = 3
 target = NodePath("../MechPlaceholder")
+
+[node name="HealthManager" type="Node" parent="."]
+script = ExtResource("16_k2uc4")
+
+[node name="Checkpoint" parent="." instance=ExtResource("17_fexau")]
+visible = false
+position = Vector2(0, 16)
+update_position = true
+
+[node name="Water" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("16_k2uc4")
+max_health = 50.0
+
+[node name="WaterPunishmentTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[connection signal="health_depleted" from="Water" to="FiniteStateMachine/Hover" method="_on_water_health_depleted"]
+[connection signal="health_depleted" from="Water" to="FiniteStateMachine/MechHelper" method="_on_water_health_depleted"]
+[connection signal="health_modified" from="Water" to="FiniteStateMachine/MechHelper" method="_on_water_health_modified"]
+[connection signal="timeout" from="WaterPunishmentTimer" to="FiniteStateMachine/MechHelper" method="_on_water_punishment_timer_timeout"]

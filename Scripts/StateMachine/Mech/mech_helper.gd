@@ -3,9 +3,13 @@ extends GenericMovementStateHelper
 @onready var pcam = %PhantomCamera2D
 @onready var arm = %Arm
 @onready var arm_top_level = %ArmTopLevel
+@onready var water = %Water
+@onready var water_pu_timer = %WaterPunishmentTimer
 
 @export var hover_state: State
 @export var dash_state: State
+@export var dash_cost: float = 50
+@export var water_recovery: float = 20
 
 var piloted: bool = false
 var aim_dir: Vector2 = Vector2.ZERO
@@ -14,12 +18,20 @@ var aim_mode: bool = false
 var last_aim_dir: Vector2 = Vector2.ZERO
 var last_aim_look_dir: int = 1
 
+var water_punishment: bool = false
+
 var controller: bool = false
+
 
 func _ready():
 	Signals.player_entered_mech.connect(activate)
 	Signals.place_mech.connect(place)
 	Signals.pilot_mech.connect(activate)
+	
+	await get_tree().process_frame
+	
+	Signals.mech_fuel_changed.emit(water.current_hp)
+	Signals.max_mech_fuel_changed.emit(water.max_health)
 
 
 func place(pos):
@@ -28,6 +40,8 @@ func place(pos):
 
 func _physics_process(delta):
 	arm_top_level.global_position = arm.global_position
+	if state_machine.state != hover_state and !water_punishment:
+		water.modify_health(+water_recovery*delta)
 	if piloted:
 		get_direction()
 		set_body_look_direction()
@@ -99,3 +113,16 @@ func set_body_look_direction():
 func activate():
 	pcam.set_priority(1)
 	piloted = true
+
+
+func _on_water_health_modified(amount, new_hp):
+	Signals.mech_fuel_changed.emit(new_hp)
+
+
+func _on_water_health_depleted():
+	water_punishment = true
+	water_pu_timer.start()
+
+
+func _on_water_punishment_timer_timeout():
+	water_punishment = false
