@@ -49,6 +49,6 @@ func check_for_fall():
 
 
 func check_for_jump():
-	if ib.time_left > 0:
+	if ib.time_left > 0 and (Input.is_action_pressed("jump") or Input.is_action_pressed("jjump")):
 		ib.stop()
 		state_machine.change_state(jump_state)

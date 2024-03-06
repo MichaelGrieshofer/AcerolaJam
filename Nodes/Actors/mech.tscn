@@ -1,14 +1,14 @@
-[gd_scene load_steps=27 format=3 uid="uid://bnqlw7ldqlw8q"]
+[gd_scene load_steps=33 format=3 uid="uid://bnqlw7ldqlw8q"]
 
 [ext_resource type="Script" path="res://Scripts/mech_interaction_area.gd" id="1_a78nb"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_81wgb"]
 [ext_resource type="Texture2D" uid="uid://criwhfmnncdam" path="res://Textures/Sprites/mech-Sheet.png" id="2_fj7nx"]
 [ext_resource type="Texture2D" uid="uid://b2gx0i6dltffx" path="res://Textures/Sprites/arm_cannon.png" id="3_iqik1"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/generic/idle.gd" id="3_uxhkv"]
 [ext_resource type="Script" path="res://Scripts/shoot.gd" id="4_aiqa0"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_helper.gd" id="5_2vjcb"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_fall.gd" id="6_cddlp"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_walk.gd" id="6_qxk4j"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_idle.gd" id="7_qpwpr"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/hover.gd" id="8_b1o0x"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="9_3er3h"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_mradi"]
@@ -17,6 +17,11 @@
 [ext_resource type="PackedScene" uid="uid://cv3b24v635f6m" path="res://Nodes/Effects/sprite_trail.tscn" id="14_f6ux4"]
 [ext_resource type="Script" path="res://Scripts/health_manager.gd" id="16_k2uc4"]
 [ext_resource type="PackedScene" uid="uid://c2dtdmn6cr6kk" path="res://Nodes/Objects/checkpoint.tscn" id="17_fexau"]
+[ext_resource type="Script" path="res://Scripts/hurtbox.gd" id="18_lxmqw"]
+[ext_resource type="Texture2D" uid="uid://bo7qy8plbj32p" path="res://Textures/Sprites/water_bar_short.png" id="19_2hab7"]
+[ext_resource type="Script" path="res://Scripts/mech_water.gd" id="19_v8j5s"]
+[ext_resource type="Texture2D" uid="uid://y24l2bk4um8n" path="res://Textures/Sprites/water_bar_short_progress.png" id="20_d7uob"]
+[ext_resource type="Texture2D" uid="uid://bj73ai4g70poy" path="res://Textures/Sprites/water_bar_end.png" id="22_yacya"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(24, 45)
@@ -207,11 +212,14 @@ duration = 0.3
 transition = 0
 ease = 2
 
-[node name="Mech" type="CharacterBody2D"]
-collision_layer = 0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bk6ac"]
+size = Vector2(16, 32)
+
+[node name="Mech" type="CharacterBody2D" groups=["Mech"]]
+z_index = 1
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 9.5)
 shape = SubResource("RectangleShape2D_c5opg")
 
@@ -235,6 +243,7 @@ metadata/_edit_group_ = true
 [node name="ArmTopLevel" type="Node2D" parent="MechPlaceholder/Arm"]
 unique_name_in_owner = true
 top_level = true
+z_index = 2
 
 [node name="SpriteTrail" parent="MechPlaceholder/Arm/ArmTopLevel" node_paths=PackedStringArray("target", "copy_rotation") instance=ExtResource("14_f6ux4")]
 every_x_frames = 3
@@ -264,7 +273,7 @@ actor = NodePath("..")
 helper = NodePath("MechHelper")
 
 [node name="Idle" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
-script = ExtResource("3_uxhkv")
+script = ExtResource("7_qpwpr")
 anim = NodePath("../../MechPlaceholder/AnimationPlayer")
 animation = "idle"
 
@@ -291,10 +300,10 @@ animation = "jump"
 
 [node name="Hover" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
 script = ExtResource("8_b1o0x")
-propulsion = 250.0
+propulsion = 400.0
 max_propulsion = 200.0
 acceleration = 0.02
-speed = 200.0
+speed = 150.0
 anim = NodePath("../../MechPlaceholder/AnimationPlayer")
 animation = "boost"
 
@@ -355,7 +364,9 @@ every_x_frames = 3
 target = NodePath("../MechPlaceholder")
 
 [node name="HealthManager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("16_k2uc4")
+max_health = 1000.0
 
 [node name="Checkpoint" parent="." instance=ExtResource("17_fexau")]
 visible = false
@@ -365,13 +376,50 @@ update_position = true
 [node name="Water" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("16_k2uc4")
-max_health = 50.0
+max_health = 250.0
 
 [node name="WaterPunishmentTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 2.0
 one_shot = true
 
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("18_lxmqw")
+health_manager = NodePath("../HealthManager")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_bk6ac")
+debug_color = Color(0.721569, 0.439216, 0.501961, 0.419608)
+
+[node name="Control" type="CenterContainer" parent="."]
+offset_left = -64.0
+offset_top = -33.0
+offset_right = 64.0
+offset_bottom = -27.0
+
+[node name="Fuel" type="TextureProgressBar" parent="Control" node_paths=PackedStringArray("end")]
+texture_repeat = 2
+layout_mode = 2
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_over = ExtResource("19_2hab7")
+texture_progress = ExtResource("20_d7uob")
+script = ExtResource("19_v8j5s")
+end = NodePath("WaterBarEnd")
+
+[node name="WaterBarEnd" type="Sprite2D" parent="Control/Fuel"]
+position = Vector2(0, 3)
+texture = ExtResource("22_yacya")
+
+[connection signal="health_depleted" from="HealthManager" to="FiniteStateMachine/MechHelper" method="_on_health_manager_health_depleted"]
+[connection signal="health_modified" from="HealthManager" to="FiniteStateMachine/MechHelper" method="_on_health_manager_health_modified"]
 [connection signal="health_depleted" from="Water" to="FiniteStateMachine/Hover" method="_on_water_health_depleted"]
 [connection signal="health_depleted" from="Water" to="FiniteStateMachine/MechHelper" method="_on_water_health_depleted"]
 [connection signal="health_modified" from="Water" to="FiniteStateMachine/MechHelper" method="_on_water_health_modified"]

@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://did1ccg33j071"]
+
+[node name="Bullets" type="Node2D"]

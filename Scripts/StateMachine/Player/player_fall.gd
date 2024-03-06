@@ -36,7 +36,7 @@ func physics_update(delta):
 	if surf and (Input.is_action_just_released("surf") or Input.is_action_just_released("jsurf")):
 		switch_state.emit(helper.fall_state)
 	
-	if helper.ct.time_left > 0 and helper.ib.time_left > 0:
+	if helper.ct.time_left > 0 and helper.ib.time_left > 0 and (Input.is_action_pressed("jump") or Input.is_action_pressed("jjump")):
 		if (Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf")):
 			switch_state.emit(helper.surf_jump_state)
 		else:

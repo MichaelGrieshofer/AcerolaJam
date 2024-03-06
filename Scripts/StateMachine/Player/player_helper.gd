@@ -35,6 +35,7 @@ func place(pos):
 
 func _physics_process(delta):
 	super(delta)
+	GameManager.player_position = actor.global_position
 	if !in_mech and !interaction.in_inside_area:
 		health.modify_health(-rain_damage*delta)
 	elif in_mech and !interaction.in_inside_area:
@@ -46,6 +47,7 @@ func _physics_process(delta):
 
 
 func enter_mech():
+	GameManager.player_outside_mech = false
 	in_mech = true
 	state_machine.active = false
 	actor.global_position = Vector2.DOWN*1000000
@@ -58,6 +60,7 @@ func enter_mech():
 
 
 func leave_mech(position):
+	GameManager.player_outside_mech = true
 	in_mech = false
 	pcam.set_priority(1)
 	actor.global_position = position

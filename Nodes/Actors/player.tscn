@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cp3dx60c3mnkf"]
+[gd_scene load_steps=29 format=3 uid="uid://cp3dx60c3mnkf"]
 
 [ext_resource type="Script" path="res://Scripts/player_interaction_area.gd" id="1_bfou5"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_is6j2"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_0na88"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/surf.gd" id="10_ukss2"]
 [ext_resource type="Script" path="res://Scripts/health_manager.gd" id="15_tuhgk"]
+[ext_resource type="Script" path="res://Scripts/hurtbox.gd" id="16_25kop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(5, 15)
@@ -170,8 +171,12 @@ duration = 0.3
 transition = 0
 ease = 2
 
-[node name="Player" type="CharacterBody2D"]
-collision_layer = 0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jpnpf"]
+size = Vector2(4, 15)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+z_index = 1
+collision_layer = 2
 safe_margin = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -386,6 +391,17 @@ inactive_update_mode = 0
 [node name="HealthManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("15_tuhgk")
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("16_25kop")
+health_manager = NodePath("../HealthManager")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_jpnpf")
+debug_color = Color(0.635294, 0.478431, 0.596078, 0.419608)
 
 [connection signal="area_entered" from="Interaction" to="Interaction" method="_on_area_entered"]
 [connection signal="area_exited" from="Interaction" to="Interaction" method="_on_area_exited"]

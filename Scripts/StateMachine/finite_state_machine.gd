@@ -15,7 +15,7 @@ func _ready():
 	change_state(state)
 	if helper:
 		helper.actor = actor
-	helper.state_machine = self
+		helper.state_machine = self
 
 
 func init_states():

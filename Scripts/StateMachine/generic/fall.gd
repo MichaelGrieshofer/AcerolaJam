@@ -9,7 +9,7 @@ extends State
 
 func physics_update(delta):
 	actor.velocity.y += gravity * delta
-	if helper.ct.time_left > 0 and helper.ib.time_left > 0:
+	if helper.ct.time_left > 0 and helper.ib.time_left > 0 and (Input.is_action_pressed("jump") or Input.is_action_pressed("jjump")):
 		switch_state.emit(helper.jump_state)
 	if actor.velocity.y >= max_fall_speed:
 		actor.velocity.y = max_fall_speed

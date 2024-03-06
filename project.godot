@@ -24,6 +24,7 @@ SoundManager="*res://Global/SoundManager.tscn"
 Transition="*res://Global/Transition.tscn"
 Signals="*res://Global/Signals.gd"
 GameManager="*res://Global/GameManager.gd"
+Bullets="*res://Global/Bullets.tscn"
 
 [display]
 
@@ -229,6 +230,7 @@ jinteract={
 [layer_names]
 
 2d_physics/layer_1="world"
+2d_physics/layer_2="player"
 
 [rendering]
 

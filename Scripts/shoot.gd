@@ -19,4 +19,5 @@ func shoot():
 		var new_bullet = bullet.instantiate()
 		new_bullet.dir = Vector2.RIGHT.rotated(copy_angle.rotation)
 		new_bullet.global_position = global_position
-		add_child(new_bullet)
+		Bullets.add_child(new_bullet)
+		new_bullet.set_collision_layers_to_player_bullet()

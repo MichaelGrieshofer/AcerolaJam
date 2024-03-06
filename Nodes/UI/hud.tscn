@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://vvlewo4rokxa"]
 
 [ext_resource type="Script" path="res://Scripts/player_health_bar.gd" id="1_ydstr"]
-[ext_resource type="Script" path="res://Scripts/mech_water.gd" id="2_hpu2c"]
+[ext_resource type="Script" path="res://Scripts/mech_hp_bar.gd" id="3_2jjto"]
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -14,6 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayerHealthBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 8.0
 offset_right = 152.0
@@ -21,11 +22,11 @@ offset_bottom = 16.0
 show_percentage = false
 script = ExtResource("1_ydstr")
 
-[node name="MechWater" type="ProgressBar" parent="Control"]
+[node name="MechHealth" type="ProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 24.0
-offset_right = 152.0
-offset_bottom = 32.0
+offset_left = 168.0
+offset_top = 8.0
+offset_right = 304.0
+offset_bottom = 16.0
 show_percentage = false
-script = ExtResource("2_hpu2c")
+script = ExtResource("3_2jjto")

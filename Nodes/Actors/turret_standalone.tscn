@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://bd2epht6kbk63"]
+
+[ext_resource type="Script" path="res://Scripts/turret_standalone.gd" id="1_ex0nn"]
+[ext_resource type="Texture2D" uid="uid://c5qs63dhbobja" path="res://Textures/Sprites/turret_base_back.png" id="2_ad1wk"]
+[ext_resource type="PackedScene" uid="uid://bhlqlcjnxqy15" path="res://Nodes/Actors/turret.tscn" id="4_t0sbu"]
+[ext_resource type="Texture2D" uid="uid://yv7c0jinukst" path="res://Textures/Sprites/turret_base.png" id="4_y57mg"]
+[ext_resource type="Script" path="res://Scripts/health_manager.gd" id="10_1avx8"]
+[ext_resource type="Script" path="res://Scripts/hurtbox.gd" id="11_fd52x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vffb"]
+size = Vector2(32, 14)
+
+[node name="TurretStandalone" type="Node2D"]
+z_index = -1
+script = ExtResource("1_ex0nn")
+
+[node name="HealthManager" type="Node" parent="."]
+script = ExtResource("10_1avx8")
+max_health = 200.0
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
+script = ExtResource("11_fd52x")
+health_manager = NodePath("../HealthManager")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+visible = false
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_4vffb")
+
+[node name="TurretBaseBack" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+texture = ExtResource("2_ad1wk")
+
+[node name="Turret" parent="." instance=ExtResource("4_t0sbu")]
+rotation_clamp = 110.0
+aim_confirm_time = 0.4
+bullet_salve = 30
+aim_speed = 0.05
+time_between_shots = 0.04
+reload_speed = 0.5
+
+[node name="TurretBase" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+texture = ExtResource("4_y57mg")
+
+[connection signal="health_depleted" from="HealthManager" to="." method="_on_health_manager_health_depleted"]

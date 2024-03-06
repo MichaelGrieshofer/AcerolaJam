@@ -59,6 +59,7 @@ sub_emitter_mode = 3
 sub_emitter_amount_at_collision = 1
 
 [node name="FullScreenRain" type="Node2D"]
+z_index = 10
 
 [node name="Rain1" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_knv7b")

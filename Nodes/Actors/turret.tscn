@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhlqlcjnxqy15"]
+
+[ext_resource type="Script" path="res://Scripts/turret.gd" id="1_1brp8"]
+[ext_resource type="Texture2D" uid="uid://bqhcwvfsfpyjn" path="res://Textures/Sprites/turret_barrel.png" id="1_ahvpe"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="4_us3w1"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Turret/turret_idle.gd" id="5_j0fac"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Turret/turret_aim.gd" id="6_7w88e"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Turret/turret_shoot.gd" id="7_bxhi0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8gfrv"]
+resource_local_to_scene = true
+radius = 192.375
+
+[node name="Turret" type="Node2D"]
+script = ExtResource("1_1brp8")
+
+[node name="RotationPoint" type="Node2D" parent="."]
+position = Vector2(0, 2)
+rotation = -1.57079
+
+[node name="TurretBarrel" type="Sprite2D" parent="RotationPoint"]
+position = Vector2(16, 0)
+rotation = 1.5708
+texture = ExtResource("1_ahvpe")
+
+[node name="RayCast2D" type="RayCast2D" parent="RotationPoint"]
+position = Vector2(2, 7.23999e-06)
+rotation = -1.57079
+target_position = Vector2(-0.000268555, 192)
+collision_mask = 2
+
+[node name="Marker2D" type="Marker2D" parent="RotationPoint"]
+position = Vector2(30, 0.0001086)
+rotation = 1.5708
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state", "actor")]
+script = ExtResource("4_us3w1")
+state = NodePath("Idle")
+actor = NodePath("..")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("5_j0fac")
+
+[node name="Aim" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("rot", "ray")]
+script = ExtResource("6_7w88e")
+rot = NodePath("../../RotationPoint")
+ray = NodePath("../../RotationPoint/RayCast2D")
+
+[node name="Shoot" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("rot", "shot_speed", "reload", "marker")]
+script = ExtResource("7_bxhi0")
+rot = NodePath("../../RotationPoint")
+shot_speed = NodePath("../../ShotSpeed")
+reload = NodePath("../../Reload")
+marker = NodePath("../../RotationPoint/Marker2D")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_8gfrv")
+debug_color = Color(0.956863, 0.54902, 0.54902, 0)
+
+[node name="ShotSpeed" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="Reload" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

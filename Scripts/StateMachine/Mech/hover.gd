@@ -33,6 +33,10 @@ func air_control():
 	actor.velocity.x = lerp(actor.velocity.x,speed*helper.dir,acceleration)
 
 
+func exit_state():
+	super()
+	helper.start_water_punishment(0.25)
+
 func _on_water_health_depleted():
 	if active:
 		end_hover()
