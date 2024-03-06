@@ -13,6 +13,12 @@ var settings_save_path = "user://settings_data.dat"
 func _ready():
 	load_settings()
 	load_game()
+	if !Save.game_data.has("abilities"):
+		Save.game_data["abilities"] = []
+
+
+func check_for_ability(resource_path):
+	return Save.game_data.get("abilities").has(resource_path)
 
 
 func save_game():

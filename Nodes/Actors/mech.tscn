@@ -384,10 +384,10 @@ wait_time = 2.0
 one_shot = true
 
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
-collision_layer = 2
-collision_mask = 2
 script = ExtResource("18_lxmqw")
 health_manager = NodePath("../HealthManager")
+enemy = false
+player = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, 8)

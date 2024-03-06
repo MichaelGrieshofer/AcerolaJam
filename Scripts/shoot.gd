@@ -4,7 +4,7 @@ extends Node2D
 @export var ever_x_frames: int = 5
 @export var helper: Node
 
-@onready var bullet = preload("res://Nodes/Actors/bullet.tscn")
+@onready var bullet = preload("res://Nodes/Actors/mech_bullet.tscn")
 
 var i: int = 0
 
@@ -20,4 +20,3 @@ func shoot():
 		new_bullet.dir = Vector2.RIGHT.rotated(copy_angle.rotation)
 		new_bullet.global_position = global_position
 		Bullets.add_child(new_bullet)
-		new_bullet.set_collision_layers_to_player_bullet()

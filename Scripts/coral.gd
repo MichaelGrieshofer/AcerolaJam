@@ -25,9 +25,10 @@ func _physics_process(delta):
 					i.queue_free()
 			set_meta("_edit_group_", true)
 			
-			var new_area = Area2D.new()
-			new_area.name = "Area2D"
-			new_area.add_to_group("Danger",true)
+			var new_area = Hitbox.new()
+			new_area.name = "Hitbox"
+			new_area.hurts_enemies = true
+			new_area.destroy_player = true
 			add_child(new_area)
 			new_area.owner = get_tree().edited_scene_root
 			

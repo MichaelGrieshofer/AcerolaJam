@@ -78,9 +78,9 @@ func _on_health_manager_health_depleted():
 	Transition.load_level()
 
 
-func _on_interaction_danger_zone_entered(damage):
-	actor.global_position = Transition.last_checkpoint_pos
-
-
 func _on_health_manager_health_modified(amount, new_hp):
 	Signals.player_health_changed.emit(new_hp)
+
+
+func _on_hurtbox_destroy_player_triggered():
+	actor.global_position = Transition.last_checkpoint_pos

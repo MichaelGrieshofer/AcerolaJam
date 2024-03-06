@@ -393,10 +393,10 @@ unique_name_in_owner = true
 script = ExtResource("15_tuhgk")
 
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
-collision_layer = 2
-collision_mask = 2
 script = ExtResource("16_25kop")
 health_manager = NodePath("../HealthManager")
+enemy = false
+mech = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, 0.5)
@@ -406,7 +406,6 @@ debug_color = Color(0.635294, 0.478431, 0.596078, 0.419608)
 [connection signal="area_entered" from="Interaction" to="Interaction" method="_on_area_entered"]
 [connection signal="area_exited" from="Interaction" to="Interaction" method="_on_area_exited"]
 [connection signal="bubble_entered" from="Interaction" to="FiniteStateMachine/DiveKick" method="_on_interaction_bubble_entered"]
-[connection signal="danger_zone_entered" from="Interaction" to="FiniteStateMachine/PlayerHelper" method="_on_interaction_danger_zone_entered"]
-[connection signal="danger_zone_entered" from="Interaction" to="HealthManager" method="modify_health"]
 [connection signal="health_depleted" from="HealthManager" to="FiniteStateMachine/PlayerHelper" method="_on_health_manager_health_depleted"]
 [connection signal="health_modified" from="HealthManager" to="FiniteStateMachine/PlayerHelper" method="_on_health_manager_health_modified"]
+[connection signal="destroy_player_triggered" from="Hurtbox" to="FiniteStateMachine/PlayerHelper" method="_on_hurtbox_destroy_player_triggered"]
