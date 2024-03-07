@@ -27,6 +27,32 @@ func _ready():
 	Signals.player_left_mech.connect(leave_mech)
 	Signals.place_player.connect(place)
 	Signals.pilot_mech.connect(enter_mech)
+	Signals.update_player_max_health.connect(update_player_max_health)
+	
+	update_player_max_health()
+	
+	await get_tree().process_frame
+	
+	Signals.max_player_health_changed.emit(health.max_health)
+	Signals.player_health_changed.emit(health.current_hp)
+
+
+func update_player_max_health():
+	health.max_health = 100
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/player_health_0.tres"):
+		health.max_health += 100
+		health.current_hp += 100
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/player_health_1.tres"):
+		health.max_health += 100
+		health.current_hp += 100
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/player_health_2.tres"):
+		health.max_health += 100
+		health.current_hp += 100
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/player_health_3.tres"):
+		health.max_health += 100
+		health.current_hp += 100
+	Signals.max_player_health_changed.emit(health.max_health)
+	Signals.player_health_changed.emit(health.current_hp)
 
 
 func place(pos):

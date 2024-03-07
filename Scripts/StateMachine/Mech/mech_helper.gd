@@ -30,12 +30,54 @@ func _ready():
 	Signals.place_mech.connect(place)
 	Signals.pilot_mech.connect(activate)
 	
+	Signals.update_mech_max_health.connect(update_mech_max_health)
+	Signals.update_mech_fuel.connect(update_mech_max_fuel)
+	
+	update_mech_max_fuel()
+	update_mech_max_health()
+	
 	await get_tree().process_frame
 	
 	Signals.max_mech_fuel_changed.emit(water.max_health)
 	Signals.mech_fuel_changed.emit(water.current_hp)
 	Signals.max_mech_health_changed.emit(hp.max_health)
 	Signals.mech_health_changed.emit(hp.current_hp)
+
+
+func update_mech_max_health():
+	hp.max_health = 1000
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_health_0.tres"):
+		hp.max_health += 1000
+		hp.current_hp += 1000
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_health_1.tres"):
+		hp.max_health += 1000
+		hp.current_hp += 1000
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_health_2.tres"):
+		hp.max_health += 1000
+		hp.current_hp += 1000
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_health_3.tres"):
+		hp.max_health += 1000
+		hp.current_hp += 1000
+	Signals.max_mech_health_changed.emit(hp.max_health)
+	Signals.mech_health_changed.emit(hp.current_hp)
+
+
+func update_mech_max_fuel():
+	water.max_health = 50
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_water_0.tres"):
+		water.max_health += 50
+		water.current_hp += 50
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_water_1.tres"):
+		water.max_health += 50
+		water.current_hp += 50
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_water_2.tres"):
+		water.max_health += 50
+		water.current_hp += 50
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_water_3.tres"):
+		water.max_health += 50
+		water.current_hp += 50
+	Signals.max_mech_fuel_changed.emit(water.max_health)
+	Signals.mech_fuel_changed.emit(water.current_hp)
 
 
 func place(pos):
@@ -67,7 +109,7 @@ func _physics_process(delta):
 
 
 func _input(event):
-	if event is InputEventMouseMotion or event is InputEventKey:
+	if event is InputEventMouseButton or event is InputEventKey:
 		controller = false
 	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
 		controller = true

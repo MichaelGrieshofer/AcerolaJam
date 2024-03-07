@@ -5,7 +5,7 @@ extends Area2D
 
 signal interaction_triggered
 
-var player_inside: bool = true
+var player_inside: bool = false
 
 func _ready():
 	area_entered.connect(on_area_entered)
@@ -13,7 +13,7 @@ func _ready():
 
 
 func _input(event):
-	if event.is_action_pressed("interact") or event.is_action("jinteract") and player_inside:
+	if (event.is_action_pressed("interact") or event.is_action("jinteract")) and player_inside:
 		interaction_triggered.emit()
 
 

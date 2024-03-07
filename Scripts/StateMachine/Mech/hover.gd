@@ -18,8 +18,9 @@ func physics_update(delta):
 	if Input.is_action_just_released("jump") or Input.is_action_just_released("jboost"):
 		end_hover()
 	
-	if (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jdash")) and helper.piloted and helper.water.current_hp > 0:
-		switch_state.emit(helper.dash_state)
+	if (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jdash")):
+		if helper.piloted and helper.water.current_hp > 0 and Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_dash.tres"):
+			switch_state.emit(helper.dash_state)
 	
 	air_control()
 	actor.move_and_slide()

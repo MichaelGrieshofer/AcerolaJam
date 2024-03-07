@@ -23,12 +23,12 @@ func exit_state():
 func physics_update(delta):
 	actor.velocity.y += gravity * delta
 	if actor.velocity.y >= 0:
-		if Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf") and surf:
+		if (Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf")) and surf:
 			switch_state.emit(helper.surf_fall_state)
 		else:
 			switch_state.emit(helper.fall_state)
 	if actor.is_on_wall():
-		if Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf"):
+		if (Input.is_action_pressed("surf") or Input.is_action_pressed("jsurf")) and Save.check_for_ability("res://Resources/CustomResources/Abilities/wall_surf.tres"):
 			switch_state.emit(helper.wall_surf_state)
 	air_control()
 	actor.move_and_slide()
@@ -48,4 +48,5 @@ func _input(event):
 				switch_state.emit(helper.double_jump_state)
 	if event.is_action_pressed("divekick") or event.is_action_pressed("jdivekick"):
 		#DiveKick
-		switch_state.emit(helper.dive_kick_state)
+		if Save.check_for_ability("res://Resources/CustomResources/Abilities/divekick.tres"):
+			switch_state.emit(helper.dive_kick_state)

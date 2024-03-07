@@ -16,8 +16,9 @@ func physics_update(delta):
 			anim.speed_scale = 0.3
 	anim.speed_scale = clamp(anim.speed_scale,-1,1)
 	
-	if (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jdash")) and helper.piloted and helper.water.current_hp > 0:
-		switch_state.emit(helper.dash_state)
+	if (Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("jdash")):
+		if helper.piloted and helper.water.current_hp > 0 and Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_dash.tres"):
+			switch_state.emit(helper.dash_state)
 
 
 func exit_state():

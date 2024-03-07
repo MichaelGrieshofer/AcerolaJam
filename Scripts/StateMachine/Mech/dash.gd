@@ -34,7 +34,7 @@ func exit_state():
 func physics_update(delta):
 	time -= delta
 	if time <= 0.0:
-		if (Input.is_action_pressed("jump") or Input.is_action_pressed("jboost")) and helper.piloted:
+		if (Input.is_action_pressed("jump") or Input.is_action_pressed("jboost")) and helper.piloted and Save.check_for_ability("res://Resources/CustomResources/Abilities/mech_hover.tres"):
 			switch_state.emit(helper.hover_state)
 		else:
 			switch_state.emit(helper.fall_state)

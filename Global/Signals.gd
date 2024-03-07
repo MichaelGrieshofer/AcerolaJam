@@ -19,3 +19,7 @@ signal mech_health_changed
 signal max_mech_health_changed
 signal mech_fuel_changed
 signal max_mech_fuel_changed
+
+signal update_player_max_health
+signal update_mech_max_health
+signal update_mech_fuel

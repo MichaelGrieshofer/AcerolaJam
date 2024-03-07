@@ -29,7 +29,10 @@ func physics_update(delta):
 	
 	if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jjump"):
 		actor.velocity.x = -wall_jump_speed*helper.look_dir
-		switch_state.emit(helper.surf_jump_state)
+		if Save.check_for_ability("res://Resources/CustomResources/Abilities/surf.tres"):
+			switch_state.emit(helper.surf_jump_state)
+		else:
+			switch_state.emit(helper.jump_state)
 	
 	actor.move_and_slide()
 
@@ -42,4 +45,7 @@ func _input(event):
 
 
 func end_surf():
-	switch_state.emit(helper.surf_fall_state)
+	if Save.check_for_ability("res://Resources/CustomResources/Abilities/surf.tres"):
+		switch_state.emit(helper.surf_fall_state)
+	else:
+		switch_state.emit(helper.fall_state)

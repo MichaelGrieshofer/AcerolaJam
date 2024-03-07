@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bkuqxbfhq1ocl"]
+[gd_scene load_steps=18 format=3 uid="uid://bkuqxbfhq1ocl"]
 
 [ext_resource type="Script" path="res://Scripts/level_manager.gd" id="1_lrhuq"]
 [ext_resource type="PackedScene" uid="uid://bnqlw7ldqlw8q" path="res://Nodes/Actors/mech.tscn" id="2_fnett"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://csab251k2o00q" path="res://Nodes/Objects/garage.tscn" id="10_4xlhi"]
 [ext_resource type="Script" path="res://Scripts/indoor_area.gd" id="10_yndmy"]
 [ext_resource type="PackedScene" uid="uid://vvlewo4rokxa" path="res://Nodes/UI/hud.tscn" id="11_0a3sd"]
+[ext_resource type="PackedScene" uid="uid://wtqdifirc4pb" path="res://Nodes/Objects/upgrade.tscn" id="12_p6h4r"]
+[ext_resource type="Resource" uid="uid://cbqwycugmghse" path="res://Resources/CustomResources/Abilities/mech_hover.tres" id="13_re5iy"]
+[ext_resource type="Resource" uid="uid://lrlxuobilan3" path="res://Resources/CustomResources/Abilities/mech_dash.tres" id="14_vklcf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q0qdi"]
 size = Vector2(64, 64)
@@ -93,3 +96,11 @@ polygon = PackedVector2Array(496, 112, 496, 304, -416, 320, -416, 176, -896, 176
 occluder = SubResource("OccluderPolygon2D_32ryi")
 
 [node name="HUD" parent="." instance=ExtResource("11_0a3sd")]
+
+[node name="Upgrade" parent="." instance=ExtResource("12_p6h4r")]
+position = Vector2(176, 192)
+ability = ExtResource("13_re5iy")
+
+[node name="Upgrade2" parent="." instance=ExtResource("12_p6h4r")]
+position = Vector2(240, 192)
+ability = ExtResource("14_vklcf")
