@@ -32,6 +32,7 @@ func _ready():
 	
 	Signals.update_mech_max_health.connect(update_mech_max_health)
 	Signals.update_mech_fuel.connect(update_mech_max_fuel)
+	Signals.set_camera_limits.connect(set_camera_limits)
 	
 	update_mech_max_fuel()
 	update_mech_max_health()
@@ -42,6 +43,13 @@ func _ready():
 	Signals.mech_fuel_changed.emit(water.current_hp)
 	Signals.max_mech_health_changed.emit(hp.max_health)
 	Signals.mech_health_changed.emit(hp.current_hp)
+
+
+func set_camera_limits(left,top,right,bottom):
+	pcam.limit_left = left
+	pcam.limit_top = top
+	pcam.limit_right = right
+	pcam.limit_bottom = bottom
 
 
 func update_mech_max_health():

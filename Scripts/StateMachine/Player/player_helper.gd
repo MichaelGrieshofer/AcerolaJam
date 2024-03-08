@@ -28,13 +28,27 @@ func _ready():
 	Signals.place_player.connect(place)
 	Signals.pilot_mech.connect(enter_mech)
 	Signals.update_player_max_health.connect(update_player_max_health)
+	Signals.set_camera_limits.connect(set_camera_limits)
+	Signals.refill_player_health.connect(heal)
 	
 	update_player_max_health()
 	
 	await get_tree().process_frame
 	
+	
 	Signals.max_player_health_changed.emit(health.max_health)
 	Signals.player_health_changed.emit(health.current_hp)
+
+
+func heal():
+	health.modify_health(health.max_health)
+
+
+func set_camera_limits(left,top,right,bottom):
+	pcam.limit_left = left
+	pcam.limit_top = top
+	pcam.limit_right = right
+	pcam.limit_bottom = bottom
 
 
 func update_player_max_health():

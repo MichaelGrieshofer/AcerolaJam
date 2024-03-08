@@ -15,6 +15,8 @@ func _ready():
 	load_game()
 	if !Save.game_data.has("abilities"):
 		Save.game_data["abilities"] = []
+	if !Save.game_data.has("buttons"):
+		Save.game_data["buttons"] = []
 
 
 func check_for_ability(resource_path):

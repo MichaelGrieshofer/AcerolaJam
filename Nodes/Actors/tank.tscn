@@ -98,7 +98,7 @@ shape = SubResource("RectangleShape2D_o6sfn")
 
 [node name="HealthManager" type="Node" parent="."]
 script = ExtResource("4_1mraq")
-max_health = 400.0
+max_health = 200.0
 
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
 script = ExtResource("5_nuh28")

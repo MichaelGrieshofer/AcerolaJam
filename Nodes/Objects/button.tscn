@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbpkgeer2ek6t"]
+
+[ext_resource type="Script" path="res://Scripts/interaction_button.gd" id="1_fusw7"]
+[ext_resource type="Texture2D" uid="uid://vlx52onqwblo" path="res://Textures/Sprites/button.png" id="2_80siu"]
+[ext_resource type="Script" path="res://Scripts/interaction_area.gd" id="3_rgths"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rx4o"]
+size = Vector2(16, 16)
+
+[node name="Button" type="Node2D"]
+script = ExtResource("1_fusw7")
+
+[node name="Button" type="Sprite2D" parent="."]
+texture = ExtResource("2_80siu")
+hframes = 2
+
+[node name="InteractionArea" type="Area2D" parent="."]
+script = ExtResource("3_rgths")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_4rx4o")
+
+[connection signal="interaction_triggered" from="InteractionArea" to="." method="_on_interaction_area_interaction_triggered"]

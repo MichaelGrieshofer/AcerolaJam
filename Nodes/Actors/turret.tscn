@@ -54,10 +54,12 @@ reload = NodePath("../../Reload")
 marker = NodePath("../../RotationPoint/Marker2D")
 
 [node name="Area2D" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_8gfrv")
 debug_color = Color(0.956863, 0.54902, 0.54902, 0)
+metadata/_edit_lock_ = true
 
 [node name="ShotSpeed" type="Timer" parent="."]
 wait_time = 0.05

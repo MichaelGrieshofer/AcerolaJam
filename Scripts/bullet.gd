@@ -1,12 +1,12 @@
 extends Node2D
 
 @export var spark = preload("res://Nodes/Effects/sparks.tscn")
+@export var speed: float = 500
 
 @onready var screen_vis: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var hitbox: Hitbox = $Hitbox
 
 var dir: Vector2 = Vector2.RIGHT
-var speed: float = 500
 
 
 func _physics_process(delta):

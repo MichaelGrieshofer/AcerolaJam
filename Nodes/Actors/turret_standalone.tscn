@@ -16,7 +16,6 @@ script = ExtResource("1_ex0nn")
 
 [node name="HealthManager" type="Node" parent="."]
 script = ExtResource("10_1avx8")
-max_health = 200.0
 
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
 script = ExtResource("11_fd52x")

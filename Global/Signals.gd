@@ -11,6 +11,10 @@ signal pilot_mech
 
 signal save_scene_path
 
+signal set_camera_limits(left,top,right,bottom)
+
+signal refill_player_health
+
 #UI
 
 signal player_health_changed
@@ -23,3 +27,4 @@ signal max_mech_fuel_changed
 signal update_player_max_health
 signal update_mech_max_health
 signal update_mech_fuel
+
