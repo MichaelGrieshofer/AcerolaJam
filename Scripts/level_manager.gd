@@ -29,6 +29,8 @@ func save_scene_path():
 
 func handle_mech_placement():
 	if Transition.last_mech_area == scene_file_path:
+		GameManager.cannot_remote_control = false
 		Signals.place_mech.emit(Transition.last_mech_position)
 	else:
+		GameManager.cannot_remote_control = true
 		Signals.place_mech.emit(Vector2.DOWN*1000000)

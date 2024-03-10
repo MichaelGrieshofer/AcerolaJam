@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cp3dx60c3mnkf"]
+[gd_scene load_steps=31 format=3 uid="uid://cp3dx60c3mnkf"]
 
 [ext_resource type="Script" path="res://Scripts/player_interaction_area.gd" id="1_bfou5"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_is6j2"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/wall_surf.gd" id="9_tol0b"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_0na88"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/surf.gd" id="10_ukss2"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/Player/remote_control.gd" id="12_3egkt"]
 [ext_resource type="Script" path="res://Scripts/health_manager.gd" id="15_tuhgk"]
 [ext_resource type="Script" path="res://Scripts/hurtbox.gd" id="16_25kop"]
 
@@ -102,6 +103,23 @@ tracks/0/keys = {
 "values": [6]
 }
 
+[sub_resource type="Animation" id="Animation_8p60r"]
+resource_name = "remote"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [13]
+}
+
 [sub_resource type="Animation" id="Animation_rpfav"]
 resource_name = "surf"
 length = 0.6
@@ -160,6 +178,7 @@ _data = {
 "fall": SubResource("Animation_7nm6j"),
 "idle": SubResource("Animation_j1gq8"),
 "jump": SubResource("Animation_3u7k4"),
+"remote": SubResource("Animation_8p60r"),
 "surf": SubResource("Animation_rpfav"),
 "surf_up": SubResource("Animation_xe5fs"),
 "walk": SubResource("Animation_px88l")
@@ -177,6 +196,7 @@ size = Vector2(4, 15)
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
 collision_layer = 2
+collision_mask = 9
 safe_margin = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -335,7 +355,12 @@ speed = 100.0
 anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
 animation = "jump"
 
-[node name="PlayerHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("double_jump_state", "dive_rebound_state", "dive_kick_state", "wall_jump_state", "wall_surf_state", "surf_state", "surf_jump_state", "surf_fall_state", "surf_double_jump_state", "bouble_jump_state", "ct", "ib", "body", "idle_state", "walk_state", "fall_state", "jump_state")]
+[node name="RemoteControl" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+script = ExtResource("12_3egkt")
+anim = NodePath("../../PlayerPlaceholder/AnimationPlayer")
+animation = "remote"
+
+[node name="PlayerHelper" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("double_jump_state", "dive_rebound_state", "dive_kick_state", "wall_jump_state", "wall_surf_state", "surf_state", "surf_jump_state", "surf_fall_state", "surf_double_jump_state", "bouble_jump_state", "remote_control_state", "ct", "ib", "body", "idle_state", "walk_state", "fall_state", "jump_state")]
 script = ExtResource("7_30uh2")
 double_jump_state = NodePath("../DoubleJump")
 dive_rebound_state = NodePath("../DiveRebound")
@@ -347,6 +372,7 @@ surf_jump_state = NodePath("../SurfJump")
 surf_fall_state = NodePath("../SurfFall")
 surf_double_jump_state = NodePath("../SurfDoubleJump")
 bouble_jump_state = NodePath("../BoubleJump")
+remote_control_state = NodePath("../RemoteControl")
 ct = NodePath("../../CT")
 ib = NodePath("../../IB")
 body = NodePath("../../PlayerPlaceholder")

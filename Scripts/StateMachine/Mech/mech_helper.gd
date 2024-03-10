@@ -30,6 +30,11 @@ func _ready():
 	Signals.place_mech.connect(place)
 	Signals.pilot_mech.connect(activate)
 	
+	Signals.remote_control_started.connect(func():
+		pcam.set_priority(2))
+	Signals.remote_control_ended.connect(func():
+		pcam.set_priority(0))
+	
 	Signals.update_mech_max_health.connect(update_mech_max_health)
 	Signals.update_mech_fuel.connect(update_mech_max_fuel)
 	Signals.set_camera_limits.connect(set_camera_limits)
@@ -99,13 +104,13 @@ func _physics_process(delta):
 		water.modify_health(+(water.max_health/100)*water_recovery_floor*delta)
 	if state_machine.state != hover_state and !water_punishment and !actor.is_on_floor():
 		water.modify_health(+(water.max_health/100)*water_recovery*delta)
-	if piloted:
+	if (piloted or GameManager.remote_control):
 		get_direction()
 		set_body_look_direction()
 		if actor.is_on_floor():
 			ct.start()
 		aim()
-		if (Input.is_action_just_pressed("enter_mech") or Input.is_action_just_pressed("jenter_mech")) and state_machine.state == idle_state:
+		if (Input.is_action_just_pressed("enter_mech") or Input.is_action_just_pressed("jenter_mech")) and state_machine.state == idle_state and !GameManager.remote_control:
 			piloted = false
 			dir = 0.0
 			state_machine.change_state(idle_state)
@@ -168,6 +173,7 @@ func set_body_look_direction():
 
 
 func activate():
+	GameManager.remote_control = false
 	pcam.set_priority(1)
 	piloted = true
 

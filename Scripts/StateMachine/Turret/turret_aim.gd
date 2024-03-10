@@ -12,10 +12,10 @@ func enter_state():
 
 func physics_update(delta):
 	var vec: Vector2 = Vector2.ZERO
-	if actor.mech_target:
-		vec = GameManager.mech_position - rot.global_position
 	if actor.player_target:
 		vec = GameManager.player_position - rot.global_position
+	if actor.mech_target:
+		vec = GameManager.mech_position - rot.global_position
 	vec = vec.rotated(-actor.global_rotation)
 	var desired_angle = vec.angle()
 	rot.rotation = lerp_angle(rot.rotation,desired_angle,actor.aim_speed)

@@ -15,6 +15,7 @@ extends GenericMovementStateHelper
 @export var surf_fall_state: State
 @export var surf_double_jump_state: State
 @export var bouble_jump_state: State
+@export var remote_control_state: State
 
 @export var rain_damage: float = 5
 @export var health_regen: float = 20
@@ -80,7 +81,7 @@ func _physics_process(delta):
 		health.modify_health(-rain_damage*delta)
 	elif in_mech and !interaction.in_inside_area:
 		health.modify_health(health_regen*delta)
-	if (Input.is_action_just_pressed("enter_mech") or Input.is_action_just_pressed("jenter_mech")) and interaction.in_mech_area:
+	if (Input.is_action_just_pressed("enter_mech") or Input.is_action_just_pressed("jenter_mech")) and interaction.in_mech_area and !GameManager.remote_control:
 		enter_mech()
 	if actor.is_on_floor():
 		has_double_jump = true

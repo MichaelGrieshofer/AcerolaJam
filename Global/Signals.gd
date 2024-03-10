@@ -15,6 +15,9 @@ signal set_camera_limits(left,top,right,bottom)
 
 signal refill_player_health
 
+signal remote_control_started
+signal remote_control_ended
+
 #UI
 
 signal player_health_changed

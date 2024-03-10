@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://co3gj2nh7gwpm"]
+
+[ext_resource type="Texture2D" uid="uid://c7pwc0w8knu62" path="res://Textures/Sprites/piston.png" id="1_0gaka"]
+[ext_resource type="Script" path="res://Scripts/piston.gd" id="1_ju5km"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqc8s"]
+size = Vector2(16, 5)
+
+[node name="Piston" type="Node2D"]
+script = ExtResource("1_ju5km")
+
+[node name="Piston" type="Node2D" parent="."]
+
+[node name="Piston" type="Sprite2D" parent="Piston"]
+z_index = -1
+position = Vector2(0, 19)
+texture = ExtResource("1_0gaka")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Piston/Piston"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Piston/Piston/CharacterBody2D"]
+position = Vector2(0, -21.5)
+shape = SubResource("RectangleShape2D_nqc8s")
+one_way_collision = true

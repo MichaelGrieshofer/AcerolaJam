@@ -31,6 +31,7 @@ func physics_update(delta):
 					actor.velocity.x = 0
 					switch_state.emit(helper.wall_surf_state)
 				else:
+					helper.has_double_jump = true
 					switch_state.emit(helper.wall_jump_state)
 		else:
 			if actor.is_on_floor():

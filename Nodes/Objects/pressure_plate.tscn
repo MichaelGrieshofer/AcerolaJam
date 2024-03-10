@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://hxviv7g7pl2g"]
+
+[ext_resource type="Script" path="res://Scripts/pressure_plate.gd" id="1_5hwr3"]
+[ext_resource type="Texture2D" uid="uid://botp74gp0oytk" path="res://Textures/Sprites/buttons.png" id="1_a4cnc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rddta"]
+size = Vector2(32, 8)
+
+[node name="PressurePlate" type="Node2D"]
+script = ExtResource("1_5hwr3")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_rddta")
+
+[node name="Buttons" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(0, -8)
+texture = ExtResource("1_a4cnc")
+hframes = 2
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

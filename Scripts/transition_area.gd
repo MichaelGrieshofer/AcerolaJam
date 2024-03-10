@@ -21,6 +21,7 @@ func _ready():
 			Signals.place_mech.emit(exit_pos_node.global_position)
 			Signals.place_player.emit(exit_pos_node.global_position)
 			Signals.pilot_mech.emit()
+			GameManager.cannot_remote_control = false
 		Transition.tag = ""
 		Transition.transition_active = false
 

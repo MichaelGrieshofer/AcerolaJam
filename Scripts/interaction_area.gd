@@ -13,7 +13,7 @@ func _ready():
 
 
 func _input(event):
-	if (event.is_action_pressed("interact") or event.is_action("jinteract")) and player_inside:
+	if (event.is_action_pressed("interact") or event.is_action_pressed("jinteract")) and player_inside:
 		interaction_triggered.emit()
 
 

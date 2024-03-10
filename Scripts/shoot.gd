@@ -9,7 +9,7 @@ extends Node2D
 var i: int = 0
 
 func _physics_process(delta):
-	if (Input.is_action_pressed("shoot") or Input.is_action_pressed("jshoot")) and helper.piloted:
+	if (Input.is_action_pressed("shoot") or Input.is_action_pressed("jshoot")) and (helper.piloted or GameManager.remote_control):
 		shoot()
 
 func shoot():

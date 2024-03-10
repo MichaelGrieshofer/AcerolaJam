@@ -74,6 +74,7 @@ texture = ExtResource("2_hwx83")
 hframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Tank-sheet"]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_n3ses")
 }
@@ -103,6 +104,8 @@ max_health = 200.0
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
 script = ExtResource("5_nuh28")
 health_manager = NodePath("../HealthManager")
+player = false
+mech = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 visible = false
