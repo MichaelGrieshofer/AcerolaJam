@@ -5,6 +5,7 @@ extends State
 @export var acceleration: float = 0.05
 @export var speed: float = 90
 @export var hover_cost: float = 50
+@export var boosters: Boosters
 
 
 func physics_update(delta):
@@ -34,9 +35,17 @@ func air_control():
 	actor.velocity.x = lerp(actor.velocity.x,speed*helper.dir,acceleration)
 
 
+func enter_state():
+	super()
+	boosters.emit(true)
+	%Jet.play()
+
+
 func exit_state():
 	super()
+	boosters.emit(false)
 	helper.start_water_punishment(0.25)
+	%Jet.stop()
 
 func _on_water_health_depleted():
 	if active:

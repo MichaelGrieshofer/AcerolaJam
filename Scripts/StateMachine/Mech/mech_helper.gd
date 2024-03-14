@@ -22,8 +22,6 @@ var last_aim_look_dir: int = 1
 
 var water_punishment: bool = false
 
-var controller: bool = false
-
 
 func _ready():
 	Signals.player_entered_mech.connect(activate)
@@ -121,13 +119,6 @@ func _physics_process(delta):
 			ib.start()
 
 
-func _input(event):
-	if event is InputEventMouseButton or event is InputEventKey:
-		controller = false
-	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
-		controller = true
-
-
 func aim():
 	mouse = actor.get_global_mouse_position()
 	aim_dir = mouse - actor.position
@@ -135,7 +126,7 @@ func aim():
 	
 	var controller_aim = Input.get_vector("jaim_left","jaim_right","jaim_up","jaim_down")
 	controller_aim = controller_aim.normalized()
-	if controller:
+	if GameManager.controller:
 		aim_dir = controller_aim
 		
 	if Input.is_action_pressed("aim") or controller_aim != Vector2.ZERO:
@@ -202,3 +193,7 @@ func _on_health_manager_health_depleted():
 
 func _on_health_manager_health_modified(amount, new_hp):
 	Signals.mech_health_changed.emit(new_hp)
+
+
+func footstep():
+	%Footstep.play()

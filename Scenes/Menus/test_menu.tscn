@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://cujs7atrpg0wo"]
+[gd_scene load_steps=11 format=3 uid="uid://cujs7atrpg0wo"]
 
-[ext_resource type="Script" path="res://Scripts/test_start_button.gd" id="1_vkmqb"]
+[ext_resource type="Theme" uid="uid://7chv4n22m40f" path="res://Resources/Themes/main.tres" id="1_cffcf"]
 [ext_resource type="PackedScene" uid="uid://bshdlywrndgrc" path="res://Nodes/UI/screen_mode_button.tscn" id="2_oxtip"]
-[ext_resource type="PackedScene" uid="uid://cyfe4w5r44kjl" path="res://Nodes/UI/msaa.tscn" id="3_wc1u7"]
-[ext_resource type="PackedScene" uid="uid://ck05lremoogwd" path="res://Nodes/UI/taa.tscn" id="4_68cne"]
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="2_uhtc0"]
+[ext_resource type="PackedScene" uid="uid://cjq2erptsgpla" path="res://Nodes/UI/save_path.tscn" id="3_46oyf"]
+[ext_resource type="Texture2D" uid="uid://cdopqwjoxvhfk" path="res://Textures/Sprites/logo.png" id="3_w4rqt"]
 [ext_resource type="PackedScene" uid="uid://ltpyotnhf46e" path="res://Nodes/UI/v_sync.tscn" id="5_g1lo8"]
 [ext_resource type="PackedScene" path="res://Nodes/UI/volume_slider.tscn" id="6_1r40j"]
 [ext_resource type="PackedScene" path="res://Nodes/UI/rebind_button.tscn" id="7_3gibd"]
 [ext_resource type="PackedScene" path="res://Nodes/UI/reset_key_bindings.tscn" id="8_ccapr"]
-[ext_resource type="AudioStream" uid="uid://cp7oip3ttnu23" path="res://Sound/Music/Waterways.mp3" id="9_mdnqr"]
+[ext_resource type="AudioStream" uid="uid://bbech7mfbyjgl" path="res://Sound/Music/MechGameOST4.mp3" id="9_o7pl3"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -17,6 +18,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_cffcf")
+script = ExtResource("2_uhtc0")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 1
@@ -29,75 +32,105 @@ grow_vertical = 2
 [node name="Main" type="Control" parent="TabContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="TabContainer/Main"]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 106.0
-offset_right = 173.0
-offset_bottom = 137.0
-text = "start"
-script = ExtResource("1_vkmqb")
-
-[node name="Graphics" type="Control" parent="TabContainer"]
-visible = false
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Graphics"]
+[node name="Logo" type="TextureRect" parent="TabContainer/Main"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -144.0
-offset_top = -131.0
-offset_right = 144.0
-offset_bottom = 131.0
+offset_left = -147.5
+offset_top = -78.5
+offset_right = 147.5
+offset_bottom = 5.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_w4rqt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Main"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -13.5
+offset_right = 57.0
+offset_bottom = 100.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScreenModeButton" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("2_oxtip")]
+[node name="SavePath" parent="TabContainer/Main/VBoxContainer" instance=ExtResource("3_46oyf")]
 layout_mode = 2
 
-[node name="MSAA" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("3_wc1u7")]
+[node name="SavePath2" parent="TabContainer/Main/VBoxContainer" instance=ExtResource("3_46oyf")]
+layout_mode = 2
+save_path = "user://save_data1.dat"
+text = "Save 2"
+
+[node name="SavePath3" parent="TabContainer/Main/VBoxContainer" instance=ExtResource("3_46oyf")]
+layout_mode = 2
+save_path = "user://save_data2.dat"
+text = "Save 3"
+
+[node name="Graphics" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
-[node name="TAA" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("4_68cne")]
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Graphics"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Graphics/MarginContainer"]
 layout_mode = 2
 
-[node name="V-sync" parent="TabContainer/Graphics/VBoxContainer" instance=ExtResource("5_g1lo8")]
+[node name="ScreenModeButton" parent="TabContainer/Graphics/MarginContainer/VBoxContainer" instance=ExtResource("2_oxtip")]
+layout_mode = 2
+
+[node name="V-sync" parent="TabContainer/Graphics/MarginContainer/VBoxContainer" instance=ExtResource("5_g1lo8")]
 layout_mode = 2
 
 [node name="Volume" type="Control" parent="TabContainer"]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Volume"]
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Volume"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -264.5
-offset_top = -175.0
-offset_right = 264.5
-offset_bottom = 175.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Volume/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Volume/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Volume/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="TabContainer/Volume/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="TabContainer/Volume/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 text = "Master"
 vertical_alignment = 1
 
-[node name="VolumeSlider" parent="TabContainer/Volume/VBoxContainer/HBoxContainer" instance=ExtResource("6_1r40j")]
+[node name="VolumeSlider" parent="TabContainer/Volume/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("6_1r40j")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -106,18 +139,18 @@ min_value = 0.0
 max_value = 1.0
 step = 0.01
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Volume/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Volume/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="TabContainer/Volume/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="TabContainer/Volume/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 text = "SFX"
 vertical_alignment = 1
 
-[node name="VolumeSlider" parent="TabContainer/Volume/VBoxContainer/HBoxContainer2" instance=ExtResource("6_1r40j")]
+[node name="VolumeSlider" parent="TabContainer/Volume/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("6_1r40j")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -127,18 +160,18 @@ max_value = 1.0
 step = 0.01
 bus = "SFX"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Volume/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Volume/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="TabContainer/Volume/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="TabContainer/Volume/MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 text = "Music"
 vertical_alignment = 1
 
-[node name="VolumeSlider" parent="TabContainer/Volume/VBoxContainer/HBoxContainer3" instance=ExtResource("6_1r40j")]
+[node name="VolumeSlider" parent="TabContainer/Volume/MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("6_1r40j")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
@@ -152,48 +185,74 @@ bus = "Music"
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/KeyBindings"]
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/KeyBindings"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -211.0
-offset_top = -211.0
-offset_right = 211.0
-offset_bottom = 211.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="RebindButton" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/KeyBindings/MarginContainer"]
 layout_mode = 2
 
-[node name="RebindButton2" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RebindButton" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+
+[node name="RebindButton2" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
 layout_mode = 2
 key = 1
 
-[node name="RebindButton3" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+[node name="RebindButton3" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
 layout_mode = 2
 key = 2
 
-[node name="RebindButton4" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+[node name="RebindButton4" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
 layout_mode = 2
 key = 3
 
-[node name="RebindButton5" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+[node name="RebindButton6" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
 layout_mode = 2
 key = 4
 
-[node name="RebindButton6" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("7_3gibd")]
+[node name="RebindButton7" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
 layout_mode = 2
 key = 5
 
-[node name="ResetKeyBindings" parent="TabContainer/KeyBindings/VBoxContainer" instance=ExtResource("8_ccapr")]
+[node name="RebindButton8" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 6
+
+[node name="RebindButton9" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 7
+
+[node name="RebindButton10" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 8
+
+[node name="RebindButton11" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 9
+
+[node name="RebindButton12" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("7_3gibd")]
+layout_mode = 2
+key = 10
+
+[node name="ResetKeyBindings" parent="TabContainer/KeyBindings/MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("8_ccapr")]
 layout_mode = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_mdnqr")
+stream = ExtResource("9_o7pl3")
 autoplay = true
+bus = &"Music"
 
-[connection signal="pressed" from="TabContainer/Main/Button" to="TabContainer/Main/Button" method="_on_pressed"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]

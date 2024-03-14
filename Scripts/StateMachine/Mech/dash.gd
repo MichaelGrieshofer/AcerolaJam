@@ -12,6 +12,7 @@ var time: float = 0
 
 func enter_state():
 	super()
+	%Dash.play()
 	actor.set_collision_mask_value(4,false)
 	helper.start_water_punishment(0.5+distance)
 	helper.water.modify_health(-helper.dash_cost)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bnqlw7ldqlw8q"]
+[gd_scene load_steps=53 format=3 uid="uid://bnqlw7ldqlw8q"]
 
 [ext_resource type="Script" path="res://Scripts/mech_interaction_area.gd" id="1_a78nb"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_81wgb"]
@@ -7,10 +7,15 @@
 [ext_resource type="Script" path="res://Scripts/shoot.gd" id="4_aiqa0"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_helper.gd" id="5_2vjcb"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_fall.gd" id="6_cddlp"]
+[ext_resource type="Script" path="res://Scripts/boosters.gd" id="6_q6fph"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_walk.gd" id="6_qxk4j"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="6_yw5oi"]
+[ext_resource type="AudioStream" uid="uid://c7u32r81a83ic" path="res://Sound/SFX/machinegun.wav" id="7_8ot0j"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_idle.gd" id="7_qpwpr"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/hover.gd" id="8_b1o0x"]
+[ext_resource type="Texture2D" uid="uid://yi4gn3xxr173" path="res://Textures/Sprites/particle2.png" id="8_q7l1r"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="9_3er3h"]
+[ext_resource type="Texture2D" uid="uid://bdi6lrpk13svx" path="res://Textures/Sprites/particle3.png" id="9_pokt4"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_mradi"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/mech_jump.gd" id="10_tvxjy"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/Mech/dash.gd" id="12_bah7k"]
@@ -22,6 +27,11 @@
 [ext_resource type="Script" path="res://Scripts/mech_water.gd" id="19_v8j5s"]
 [ext_resource type="Texture2D" uid="uid://y24l2bk4um8n" path="res://Textures/Sprites/water_bar_short_progress.png" id="20_d7uob"]
 [ext_resource type="Texture2D" uid="uid://bj73ai4g70poy" path="res://Textures/Sprites/water_bar_end.png" id="22_yacya"]
+[ext_resource type="Script" path="res://Scripts/interaction_area.gd" id="23_p4c71"]
+[ext_resource type="PackedScene" uid="uid://d3g23uemxjfcd" path="res://Nodes/UI/interaction_icon_mech.tscn" id="24_jjya2"]
+[ext_resource type="AudioStream" uid="uid://k3od8pccqweu" path="res://Sound/SFX/dash.wav" id="30_63cvb"]
+[ext_resource type="AudioStream" uid="uid://l6kggko78k7f" path="res://Sound/SFX/jet.wav" id="31_p4j4u"]
+[ext_resource type="AudioStream" uid="uid://b52mvkfipcbyt" path="res://Sound/SFX/footstep_mech.wav" id="32_icktl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(24, 45)
@@ -195,6 +205,23 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(-13, 4), Vector2(-13, 5), Vector2(-13, 4), Vector2(-13, 4), Vector2(-13, 5), Vector2(-13, 4)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../FiniteStateMachine/MechHelper")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"footstep"
+}, {
+"args": [],
+"method": &"footstep"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2444x"]
 _data = {
@@ -205,6 +232,72 @@ _data = {
 "jump": SubResource("Animation_f6jn0"),
 "walk": SubResource("Animation_28jxw")
 }
+
+[sub_resource type="Curve" id="Curve_8eebj"]
+max_value = 100.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 36.2637), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jql0k"]
+curve = SubResource("Curve_8eebj")
+
+[sub_resource type="Curve" id="Curve_22aio"]
+_data = [Vector2(0, 0.857143), 0.0, -2.06044, 0, 0, Vector2(0.68, 0), -0.351038, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4o3lr"]
+curve = SubResource("Curve_22aio")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tnple"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(-1, 1, 0)
+spread = 10.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 98, 0)
+damping_min = 17.978
+damping_max = 44.944
+damping_curve = SubResource("CurveTexture_jql0k")
+scale_curve = SubResource("CurveTexture_4o3lr")
+color = Color(0.396078, 1, 1, 0.282353)
+hue_variation_min = -1.0
+hue_variation_max = -0.84
+turbulence_noise_strength = 16.79
+turbulence_noise_scale = 5.632
+turbulence_noise_speed_random = 2.94
+
+[sub_resource type="Curve" id="Curve_x6pvv"]
+max_value = 100.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 36.2637), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b0rse"]
+curve = SubResource("Curve_x6pvv")
+
+[sub_resource type="Curve" id="Curve_suc4x"]
+_data = [Vector2(0, 0.659341), 0.0, -2.06044, 0, 0, Vector2(0.593333, 0), -0.351038, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_awvur"]
+curve = SubResource("Curve_suc4x")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qof61"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(-1, 1, 0)
+spread = 10.0
+initial_velocity_min = 30.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 98, 0)
+damping_max = 44.944
+damping_curve = SubResource("CurveTexture_b0rse")
+scale_curve = SubResource("CurveTexture_awvur")
+turbulence_noise_strength = 16.79
+turbulence_noise_scale = 5.632
+turbulence_noise_speed_random = 2.94
 
 [sub_resource type="Resource" id="Resource_1bq4u"]
 script = ExtResource("10_mradi")
@@ -262,11 +355,60 @@ script = ExtResource("4_aiqa0")
 copy_angle = NodePath("..")
 helper = NodePath("../../../../FiniteStateMachine/MechHelper")
 
+[node name="RandomAudioStreamPlayer" type="Node" parent="MechPlaceholder/Arm/ArmTopLevel"]
+script = ExtResource("6_yw5oi")
+min_pitch = 0.7
+max_pitch = 1.2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MechPlaceholder/Arm/ArmTopLevel/RandomAudioStreamPlayer"]
+stream = ExtResource("7_8ot0j")
+volume_db = -8.0
+bus = &"SFX"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MechPlaceholder"]
 libraries = {
 "": SubResource("AnimationLibrary_2444x")
 }
 autoplay = "idle"
+
+[node name="Boosters" type="Node2D" parent="MechPlaceholder"]
+script = ExtResource("6_q6fph")
+
+[node name="Boost" type="GPUParticles2D" parent="MechPlaceholder/Boosters"]
+z_index = 1
+position = Vector2(-15, 26)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_tnple")
+texture = ExtResource("8_q7l1r")
+speed_scale = 1.5
+
+[node name="Boost2" type="GPUParticles2D" parent="MechPlaceholder/Boosters"]
+z_index = 1
+position = Vector2(-15, 26)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_qof61")
+texture = ExtResource("9_pokt4")
+speed_scale = 1.5
+
+[node name="Boost3" type="GPUParticles2D" parent="MechPlaceholder/Boosters"]
+z_index = -1
+position = Vector2(-7, 29)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_tnple")
+texture = ExtResource("8_q7l1r")
+speed_scale = 1.5
+
+[node name="Boost4" type="GPUParticles2D" parent="MechPlaceholder/Boosters"]
+z_index = -1
+position = Vector2(-7, 29)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_qof61")
+texture = ExtResource("9_pokt4")
+speed_scale = 1.5
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state", "actor", "helper")]
 script = ExtResource("2_81wgb")
@@ -300,12 +442,13 @@ speed = 200.0
 anim = NodePath("../../MechPlaceholder/AnimationPlayer")
 animation = "jump"
 
-[node name="Hover" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("anim")]
+[node name="Hover" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("boosters", "anim")]
 script = ExtResource("8_b1o0x")
 propulsion = 400.0
 max_propulsion = 200.0
 acceleration = 0.02
 speed = 150.0
+boosters = NodePath("../../MechPlaceholder/Boosters")
 anim = NodePath("../../MechPlaceholder/AnimationPlayer")
 animation = "boost"
 
@@ -379,6 +522,7 @@ update_position = true
 unique_name_in_owner = true
 script = ExtResource("16_k2uc4")
 max_health = 250.0
+death_effect = null
 
 [node name="WaterPunishmentTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -419,6 +563,57 @@ end = NodePath("WaterBarEnd")
 [node name="WaterBarEnd" type="Sprite2D" parent="Control/Fuel"]
 position = Vector2(0, 3)
 texture = ExtResource("22_yacya")
+
+[node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction_icon")]
+script = ExtResource("23_p4c71")
+interaction_icon = NodePath("InteractionIcon")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="InteractionArea"]
+visible = false
+position = Vector2(0, 9.5)
+shape = SubResource("RectangleShape2D_c5opg")
+
+[node name="InteractionIcon" parent="InteractionArea" instance=ExtResource("24_jjya2")]
+position = Vector2(0, -30)
+
+[node name="Dash" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_yw5oi")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Dash"]
+stream = ExtResource("30_63cvb")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="Jet" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_yw5oi")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Jet"]
+stream = ExtResource("31_p4j4u")
+bus = &"SFX"
+
+[node name="Footstep" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_yw5oi")
+min_pitch = 0.6
+max_pitch = 1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Footstep"]
+stream = ExtResource("32_icktl")
+volume_db = -8.0
+bus = &"SFX"
+
+[node name="Landing" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_yw5oi")
+min_pitch = 0.6
+max_pitch = 0.8
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Landing"]
+stream = ExtResource("32_icktl")
+volume_db = -5.0
+bus = &"SFX"
 
 [connection signal="health_depleted" from="HealthManager" to="FiniteStateMachine/MechHelper" method="_on_health_manager_health_depleted"]
 [connection signal="health_modified" from="HealthManager" to="FiniteStateMachine/MechHelper" method="_on_health_manager_health_modified"]

@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://7chv4n22m40f"]
+
+[ext_resource type="FontFile" uid="uid://fh4lrxkq01vi" path="res://Resources/Fonts/Rajdhani/Rajdhani-Light.ttf" id="1_r2rlw"]
+
+[resource]
+default_font = ExtResource("1_r2rlw")

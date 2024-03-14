@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjq2erptsgpla"]
+
+[ext_resource type="Script" path="res://Scripts/test_start_button.gd" id="1_52qd2"]
+[ext_resource type="Texture2D" uid="uid://cp71pq1ukqmxq" path="res://Textures/Sprites/delete.png" id="2_y8ojf"]
+[ext_resource type="Texture2D" uid="uid://biepvmm7gpoai" path="res://Textures/Sprites/delete3.png" id="3_7ky73"]
+[ext_resource type="Texture2D" uid="uid://yqucuejywmvu" path="res://Textures/Sprites/delete2.png" id="4_asmu8"]
+[ext_resource type="Texture2D" uid="uid://cq1o5i1threcp" path="res://Textures/Sprites/delete4.png" id="5_4vkul"]
+
+[node name="SavePath" type="HBoxContainer"]
+script = ExtResource("1_52qd2")
+
+[node name="SavePath" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save 1"
+
+[node name="Delete" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("2_y8ojf")
+texture_pressed = ExtResource("3_7ky73")
+texture_hover = ExtResource("4_asmu8")
+texture_disabled = ExtResource("5_4vkul")
+stretch_mode = 3
+
+[connection signal="pressed" from="SavePath" to="." method="_on_save_path_pressed"]
+[connection signal="pressed" from="Delete" to="." method="_on_delete_pressed"]

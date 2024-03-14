@@ -18,6 +18,10 @@ signal refill_player_health
 signal remote_control_started
 signal remote_control_ended
 
+signal player_entered_inside
+signal player_exited_inside
+
+
 #UI
 
 signal player_health_changed
@@ -31,3 +35,4 @@ signal update_player_max_health
 signal update_mech_max_health
 signal update_mech_fuel
 
+signal upgrade_message_display(message)

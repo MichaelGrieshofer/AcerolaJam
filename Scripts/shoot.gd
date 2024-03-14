@@ -15,6 +15,7 @@ func _physics_process(delta):
 func shoot():
 	i += 1
 	if i == ever_x_frames:
+		$"../RandomAudioStreamPlayer/AudioStreamPlayer".play()
 		i = 0
 		var new_bullet = bullet.instantiate()
 		new_bullet.dir = Vector2.RIGHT.rotated(copy_angle.rotation)

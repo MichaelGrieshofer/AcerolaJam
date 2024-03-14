@@ -5,12 +5,14 @@ extends FallState
 func enter_state():
 	super()
 	if surf:
+		%Surf.play()
 		helper.toggle_after_image(true)
 
 
 func exit_state():
 	super()
 	if surf:
+		%Surf.stop()
 		helper.toggle_after_image(false)
 
 func physics_update(delta):
@@ -55,3 +57,9 @@ func _input(event):
 		#DiveKick
 		if Save.check_for_ability("res://Resources/CustomResources/Abilities/divekick.tres"):
 			switch_state.emit(helper.dive_kick_state)
+
+
+func check_for_landing():
+	if actor.is_on_floor():
+		switch_state.emit(helper.idle_state)
+		%Landing.play()

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0rafi32ffutk"]
+
+[ext_resource type="Script" path="res://Scripts/trigger_canvas_item.gd" id="1_eg3ci"]
+
+[node name="TriggerCanvasItem" type="Area2D"]
+script = ExtResource("1_eg3ci")

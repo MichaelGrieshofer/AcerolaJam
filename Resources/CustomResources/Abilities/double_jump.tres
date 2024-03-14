@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_qj43w")
+message = "Double Jump Unlocked"

@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://1ge67cv6mtif"]
+
+[ext_resource type="Script" path="res://Scripts/interaction_icon.gd" id="1_3uk8i"]
+[ext_resource type="Texture2D" uid="uid://bcd5yrhdrqswp" path="res://addons/ActionIcon/Keyboard/Blank.png" id="2_s5qvt"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="3_87kdg"]
+
+[node name="InteractionIcon" type="Node2D"]
+script = ExtResource("1_3uk8i")
+
+[node name="ActionIcon" type="TextureRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 30.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_s5qvt")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_87kdg")
+action_name = &"remote_control"
+
+[node name="ActionIcon2" type="TextureRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 30.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_s5qvt")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_87kdg")
+action_name = &"jremote_control"

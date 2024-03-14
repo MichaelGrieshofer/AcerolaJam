@@ -4,10 +4,15 @@ extends Node
 enum input_map_keys {
 	left,
 	right,
-	up,
-	down,
-	quit,
-	left_click
+	jump,
+	divekick,
+	surf,
+	enter_mech,
+	aim,
+	shoot,
+	dash,
+	interact,
+	remote_control
 	}
 
 signal  disable_focus_mode

@@ -1,6 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bs6apvd1xudgv"]
+[gd_scene load_steps=13 format=3 uid="uid://bs6apvd1xudgv"]
 
 [ext_resource type="Script" path="res://Scripts/sparks.gd" id="1_xkuxv"]
+[ext_resource type="AudioStream" uid="uid://btyjyfjaom080" path="res://Sound/SFX/pling.ogg" id="2_ofnbe"]
+[ext_resource type="AudioStream" uid="uid://csllje77qoaxt" path="res://Sound/SFX/normal_impact.wav" id="3_v1j3j"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="4_dhwk6"]
 
 [sub_resource type="Gradient" id="Gradient_p2fpb"]
 offsets = PackedFloat32Array(0.0245902, 1)
@@ -43,7 +46,7 @@ gravity = Vector3(0, 98, 0)
 scale_curve = SubResource("CurveTexture_ycqg1")
 color_ramp = SubResource("GradientTexture1D_uv4hq")
 
-[node name="Sparks" type="GPUParticles2D"]
+[node name="Sparks" type="GPUParticles2D" node_paths=PackedStringArray("hit_sound", "hit_target_sound")]
 emitting = false
 amount = 5
 process_material = SubResource("ParticleProcessMaterial_2u5sh")
@@ -53,6 +56,8 @@ explosiveness = 1.0
 trail_enabled = true
 trail_lifetime = 0.1
 script = ExtResource("1_xkuxv")
+hit_sound = NodePath("RandomAudioStreamPlayer2")
+hit_target_sound = NodePath("RandomAudioStreamPlayer")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 z_index = 1
@@ -64,5 +69,21 @@ one_shot = true
 explosiveness = 1.0
 trail_enabled = true
 trail_lifetime = 0.2
+
+[node name="RandomAudioStreamPlayer" type="Node" parent="."]
+script = ExtResource("4_dhwk6")
+min_pitch = 1.0
+max_pitch = 1.5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="RandomAudioStreamPlayer"]
+stream = ExtResource("2_ofnbe")
+bus = &"SFX"
+
+[node name="RandomAudioStreamPlayer2" type="Node" parent="."]
+script = ExtResource("4_dhwk6")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="RandomAudioStreamPlayer2"]
+stream = ExtResource("3_v1j3j")
+bus = &"SFX"
 
 [connection signal="finished" from="." to="." method="_on_finished"]

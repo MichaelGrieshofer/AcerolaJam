@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cp3dx60c3mnkf"]
+[gd_scene load_steps=35 format=3 uid="uid://cp3dx60c3mnkf"]
 
 [ext_resource type="Script" path="res://Scripts/player_interaction_area.gd" id="1_bfou5"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/finite_state_machine.gd" id="2_is6j2"]
@@ -17,6 +17,10 @@
 [ext_resource type="Script" path="res://Scripts/StateMachine/Player/remote_control.gd" id="12_3egkt"]
 [ext_resource type="Script" path="res://Scripts/health_manager.gd" id="15_tuhgk"]
 [ext_resource type="Script" path="res://Scripts/hurtbox.gd" id="16_25kop"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="18_t5v2b"]
+[ext_resource type="AudioStream" uid="uid://etrtgwhb2u3e" path="res://Sound/SFX/footstep_pilot.wav" id="19_77vjy"]
+[ext_resource type="AudioStream" uid="uid://b0dfgto3vkdb3" path="res://Sound/SFX/surf.wav" id="20_dffu3"]
+[ext_resource type="AudioStream" uid="uid://k3od8pccqweu" path="res://Sound/SFX/dash.wav" id="21_onk2y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5opg"]
 size = Vector2(5, 15)
@@ -428,6 +432,34 @@ mech = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_jpnpf")
 debug_color = Color(0.635294, 0.478431, 0.596078, 0.419608)
+
+[node name="Landing" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("18_t5v2b")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Landing"]
+stream = ExtResource("19_77vjy")
+bus = &"SFX"
+
+[node name="Surf" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("18_t5v2b")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Surf"]
+stream = ExtResource("20_dffu3")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="Dive" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("18_t5v2b")
+min_pitch = 1.0
+max_pitch = 1.5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Dive"]
+stream = ExtResource("21_onk2y")
+volume_db = 5.0
+bus = &"SFX"
 
 [connection signal="area_entered" from="Interaction" to="Interaction" method="_on_area_entered"]
 [connection signal="area_exited" from="Interaction" to="Interaction" method="_on_area_exited"]

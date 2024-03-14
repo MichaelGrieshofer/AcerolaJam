@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cs1goitxqh1ue"]
+[gd_scene load_steps=6 format=3 uid="uid://cs1goitxqh1ue"]
 
 [ext_resource type="Script" path="res://Scripts/interaction_area.gd" id="1_ovig6"]
 [ext_resource type="Script" path="res://Scripts/battery.gd" id="1_s8jol"]
 [ext_resource type="Texture2D" uid="uid://bwgicao7dfugk" path="res://Textures/Sprites/battery.png" id="2_vtf76"]
+[ext_resource type="PackedScene" uid="uid://cv8se01mhvg1u" path="res://Nodes/UI/interaction_icon.tscn" id="4_cnl6i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwu8l"]
 size = Vector2(20, 32)
@@ -10,11 +11,15 @@ size = Vector2(20, 32)
 [node name="Battery" type="Node2D"]
 script = ExtResource("1_s8jol")
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction_icon")]
 script = ExtResource("1_ovig6")
+interaction_icon = NodePath("InteractionIcon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("RectangleShape2D_lwu8l")
+
+[node name="InteractionIcon" parent="InteractionArea" instance=ExtResource("4_cnl6i")]
+position = Vector2(0, -32)
 
 [node name="Battery" type="Sprite2D" parent="."]
 texture = ExtResource("2_vtf76")

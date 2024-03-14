@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://b2mb6r4yb3q7f"]
+
+[ext_resource type="Texture2D" uid="uid://bdi6lrpk13svx" path="res://Textures/Sprites/particle3.png" id="1_amy6t"]
+[ext_resource type="Script" path="res://Scripts/sparks.gd" id="2_l3law"]
+
+[sub_resource type="Curve" id="Curve_103k7"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.4, 53.8462), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gr4xe"]
+curve = SubResource("Curve_103k7")
+
+[sub_resource type="Curve" id="Curve_q8g3n"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_unl72"]
+curve = SubResource("Curve_q8g3n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n2ow5"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 98, 0)
+damping_min = 2.0
+damping_max = 5.0
+damping_curve = SubResource("CurveTexture_gr4xe")
+scale_curve = SubResource("CurveTexture_unl72")
+
+[sub_resource type="Curve" id="Curve_4ei5t"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_24ots"]
+curve = SubResource("Curve_4ei5t")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0jncl"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 98, 0)
+scale_curve = SubResource("CurveTexture_24ots")
+
+[node name="Explosion" type="GPUParticles2D"]
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_n2ow5")
+texture = ExtResource("1_amy6t")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("2_l3law")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_0jncl")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+
+[connection signal="finished" from="." to="." method="_on_finished"]

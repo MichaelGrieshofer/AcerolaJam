@@ -10,7 +10,9 @@ func _ready():
 		color = Color(31,31,31,139)
 	else:
 		show()
-		color = Color.TRANSPARENT
+		z_index = -50
+		texture = load("res://Textures/Sprites/background.png")
+		texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 
 
 func _physics_process(delta):

@@ -20,6 +20,8 @@ script = ExtResource("10_1avx8")
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_manager")]
 script = ExtResource("11_fd52x")
 health_manager = NodePath("../HealthManager")
+player = false
+mech = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 visible = false

@@ -6,6 +6,7 @@ extends State
 
 func enter_state():
 	super()
+	%Surf.play()
 	helper.has_double_jump = true
 	actor.velocity.y = -abs(actor.velocity.x)
 	helper.toggle_after_image(true)
@@ -13,6 +14,7 @@ func enter_state():
 
 func exit_state():
 	super()
+	%Surf.stop()
 	helper.toggle_after_image(false)
 
 

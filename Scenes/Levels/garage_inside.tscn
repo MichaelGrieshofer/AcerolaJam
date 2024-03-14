@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dgwl4eqvyxrj5"]
+[gd_scene load_steps=20 format=3 uid="uid://dgwl4eqvyxrj5"]
 
 [ext_resource type="Script" path="res://Scripts/garage_manager.gd" id="1_katt5"]
 [ext_resource type="PackedScene" uid="uid://cp3dx60c3mnkf" path="res://Nodes/Actors/player.tscn" id="3_apey8"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://b2gx0i6dltffx" path="res://Textures/Sprites/arm_cannon.png" id="5_lg86n"]
 [ext_resource type="PackedScene" uid="uid://ckpy45jle6oy1" path="res://Nodes/Objects/activated_transition_area.tscn" id="6_myopu"]
 [ext_resource type="Script" path="res://Scripts/indoor_area.gd" id="7_lpr4u"]
+[ext_resource type="Script" path="res://Scripts/interaction_area.gd" id="8_41fab"]
+[ext_resource type="PackedScene" uid="uid://cv8se01mhvg1u" path="res://Nodes/UI/interaction_icon.tscn" id="9_1drfm"]
+[ext_resource type="AudioStream" uid="uid://bbech7mfbyjgl" path="res://Sound/Music/MechGameOST4.mp3" id="10_kjxel"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_j8oye"]
 a = Vector2(-88, -32)
@@ -175,3 +178,20 @@ polygon = PackedVector2Array(-160, -168, -160, 96, 160, 96, 160, -168)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="InsideArea"]
 occluder = SubResource("OccluderPolygon2D_npixa")
+
+[node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction_icon")]
+script = ExtResource("8_41fab")
+interaction_icon = NodePath("InteractionIcon")
+
+[node name="_CollisionShape2D_86699" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-4, 23)
+shape = SubResource("RectangleShape2D_ooeis")
+
+[node name="InteractionIcon" parent="InteractionArea" instance=ExtResource("9_1drfm")]
+position = Vector2(-4, 4)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_kjxel")
+volume_db = -10.0
+autoplay = true
+bus = &"Music"

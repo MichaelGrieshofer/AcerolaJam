@@ -17,6 +17,7 @@ func _on_interaction_area_interaction_triggered():
 	Signals.update_mech_fuel.emit()
 	Signals.update_mech_max_health.emit()
 	Signals.update_player_max_health.emit()
+	Signals.upgrade_message_display.emit(ability.message)
 	empty()
 
 

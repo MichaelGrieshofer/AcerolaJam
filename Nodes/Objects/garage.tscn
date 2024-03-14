@@ -1,15 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://csab251k2o00q"]
+[gd_scene load_steps=10 format=3 uid="uid://csab251k2o00q"]
 
 [ext_resource type="PackedScene" uid="uid://ce3ua803rno83" path="res://Nodes/Objects/save_area.tscn" id="1_jds2h"]
 [ext_resource type="Script" path="res://Scripts/garage.gd" id="1_ua6x4"]
 [ext_resource type="Texture2D" uid="uid://bq13i86oeksox" path="res://Textures/Sprites/garage.png" id="2_t150f"]
 [ext_resource type="PackedScene" uid="uid://ckpy45jle6oy1" path="res://Nodes/Objects/activated_transition_area.tscn" id="3_0medc"]
+[ext_resource type="Script" path="res://Scripts/interaction_area.gd" id="5_wae8x"]
+[ext_resource type="PackedScene" uid="uid://cv8se01mhvg1u" path="res://Nodes/UI/interaction_icon.tscn" id="6_d2kyh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucx34"]
 size = Vector2(48, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ydp8c"]
 size = Vector2(16, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fqtss"]
+size = Vector2(14, 18)
 
 [node name="Garage" type="Node2D"]
 script = ExtResource("1_ua6x4")
@@ -37,6 +42,17 @@ position = Vector2(-4, 0)
 [node name="@CollisionShape2D@47669" type="CollisionShape2D" parent="TransitionArea"]
 position = Vector2(-4, 7)
 shape = SubResource("RectangleShape2D_ydp8c")
+
+[node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("interaction_icon")]
+script = ExtResource("5_wae8x")
+interaction_icon = NodePath("InteractionIcon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-3, 39)
+shape = SubResource("RectangleShape2D_fqtss")
+
+[node name="InteractionIcon" parent="InteractionArea" instance=ExtResource("6_d2kyh")]
+position = Vector2(-4, 10)
 
 [connection signal="entered" from="TransitionArea" to="." method="_on_transition_area_entered"]
 [connection signal="exited" from="TransitionArea" to="." method="_on_transition_area_exited"]

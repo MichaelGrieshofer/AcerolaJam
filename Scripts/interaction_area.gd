@@ -20,8 +20,12 @@ func _input(event):
 func on_area_entered(area):
 	if area is Player:
 		player_inside = true
+		var tween = get_tree().create_tween()
+		tween.tween_property(interaction_icon,"modulate",Color.WHITE,0.2)
 
 
 func on_area_exited(area):
 	if area is Player:
 		player_inside = false
+		var tween = get_tree().create_tween()
+		tween.tween_property(interaction_icon,"modulate",Color.TRANSPARENT,0.2)

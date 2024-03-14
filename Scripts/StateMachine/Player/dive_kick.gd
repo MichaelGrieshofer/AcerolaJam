@@ -7,6 +7,7 @@ extends State
 
 func enter_state():
 	super()
+	%Dive.play()
 	helper.toggle_after_image(true)
 	actor.velocity.y = downward_speed
 	actor.velocity.x = horizontal_speed * helper.last_dir

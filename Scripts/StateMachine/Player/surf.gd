@@ -3,11 +3,13 @@ extends WalkState
 
 func enter_state():
 	super()
+	%Surf.play()
 	helper.toggle_after_image(true)
 
 
 func exit_state():
 	super()
+	%Surf.stop()
 	helper.toggle_after_image(false)
 
 

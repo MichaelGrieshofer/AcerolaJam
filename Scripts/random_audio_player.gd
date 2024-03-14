@@ -15,3 +15,9 @@ func play():
 			player.play()
 	else:
 		print(self," has no audio sources")
+
+
+func stop():
+	for player in get_children():
+		if player is AudioStreamPlayer:
+			player.stop()

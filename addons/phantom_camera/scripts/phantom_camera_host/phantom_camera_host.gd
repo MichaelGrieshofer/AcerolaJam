@@ -40,7 +40,7 @@ var is_child_of_camera: bool = false
 var _is_2D: bool
 
 
-var viewfinder_scene = load("res://addons/phantom_camera/panel/viewfinder/viewfinder_panel.tscn")
+@onready var viewfinder_scene = preload("res://addons/phantom_camera/panel/viewfinder/viewfinder_panel.tscn")
 var viewfinder_node: Control
 var viewfinder_needed_check: bool = true
 

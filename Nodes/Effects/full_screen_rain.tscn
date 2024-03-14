@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4uq5yampsad"]
+[gd_scene load_steps=8 format=3 uid="uid://c4uq5yampsad"]
 
 [ext_resource type="Shader" path="res://Resources/Shaders/rain.gdshader" id="1_a6srj"]
+[ext_resource type="Script" path="res://Scripts/full_screen_rain.gd" id="1_j3xye"]
+[ext_resource type="AudioStream" uid="uid://dnd8as2pqfmut" path="res://Sound/SFX/370284__ztitchez__rain-heavy-early-morning_01.wav" id="3_t4vc0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_knv7b"]
 shader = ExtResource("1_a6srj")
@@ -60,8 +62,11 @@ sub_emitter_amount_at_collision = 1
 
 [node name="FullScreenRain" type="Node2D"]
 z_index = 10
+script = ExtResource("1_j3xye")
 
-[node name="Rain1" type="GPUParticles2D" parent="."]
+[node name="GPU" type="Node2D" parent="."]
+
+[node name="Rain1" type="GPUParticles2D" parent="GPU"]
 material = SubResource("ShaderMaterial_knv7b")
 position = Vector2(156, 0)
 amount = 300
@@ -71,7 +76,7 @@ visibility_rect = Rect2(-100, 0, 200, 200)
 trail_enabled = true
 trail_lifetime = 0.15
 
-[node name="Rain2" type="GPUParticles2D" parent="."]
+[node name="Rain2" type="GPUParticles2D" parent="GPU"]
 position = Vector2(156, 0)
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_t1umu")
@@ -79,7 +84,7 @@ visibility_rect = Rect2(-100, 0, 200, 200)
 trail_enabled = true
 trail_lifetime = 0.15
 
-[node name="Rain3" type="GPUParticles2D" parent="."]
+[node name="Rain3" type="GPUParticles2D" parent="GPU"]
 position = Vector2(156, 0)
 amount = 40
 process_material = SubResource("ParticleProcessMaterial_tj6d2")
@@ -88,3 +93,9 @@ randomness = 1.0
 visibility_rect = Rect2(-100, 0, 200, 200)
 trail_enabled = true
 trail_lifetime = 0.1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_t4vc0")
+volume_db = 5.0
+autoplay = true
+bus = &"SFX"

@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_x3xrj")
+message = "Mech Dash Unlocked"

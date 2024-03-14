@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_lb4by")
+message = "Pilot AP +"

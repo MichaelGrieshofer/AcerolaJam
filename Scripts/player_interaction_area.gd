@@ -13,6 +13,7 @@ func _on_area_entered(area):
 		bubble_entered.emit(area)
 	if area.is_in_group("Inside"):
 		in_inside_area = true
+		GameManager.player_inside = true
 	if area is Checkpoint:
 		Transition.last_checkpoint_pos = area.spawn_location
 
@@ -22,3 +23,4 @@ func _on_area_exited(area):
 		in_mech_area = false
 	if area.is_in_group("Inside"):
 		in_inside_area = false
+		GameManager.player_inside = false

@@ -12,11 +12,13 @@ func enter_state():
 	if from_wall:
 		actor.velocity.x = -horizontal_speed*helper.look_dir
 	if surf:
+		%Surf.play()
 		helper.toggle_after_image(true)
 
 
 func exit_state():
 	super()
+	%Surf.stop()
 	helper.toggle_after_image(false)
 
 

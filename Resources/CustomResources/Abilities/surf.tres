@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_5oxx8")
+message = "Surf Unlocked"

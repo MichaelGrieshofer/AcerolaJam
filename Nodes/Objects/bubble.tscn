@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://0ijumir83wg8"]
+[gd_scene load_steps=11 format=3 uid="uid://0ijumir83wg8"]
 
 [ext_resource type="Script" path="res://Scripts/bubble.gd" id="1_0w54d"]
 [ext_resource type="Texture2D" uid="uid://dikjafpbhk8pd" path="res://Textures/Sprites/bubble-Sheet.png" id="1_a6v0b"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="3_ksagg"]
+[ext_resource type="AudioStream" uid="uid://ficukclpjhg8" path="res://Sound/SFX/bubble.wav" id="4_3wxjv"]
 
 [sub_resource type="Animation" id="Animation_lqt3n"]
 length = 0.001
@@ -92,6 +94,14 @@ libraries = {
 "": SubResource("AnimationLibrary_qalid")
 }
 autoplay = "idle"
+
+[node name="BubbleSound" type="Node" parent="Bubble"]
+unique_name_in_owner = true
+script = ExtResource("3_ksagg")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Bubble/BubbleSound"]
+stream = ExtResource("4_3wxjv")
+volume_db = 5.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3ahla")

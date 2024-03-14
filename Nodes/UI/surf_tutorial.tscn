@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbay7oaafp455"]
+
+[ext_resource type="Script" path="res://Scripts/interaction_icon.gd" id="1_efovm"]
+[ext_resource type="Texture2D" uid="uid://bcd5yrhdrqswp" path="res://addons/ActionIcon/Keyboard/Blank.png" id="2_hod7j"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="3_vry0h"]
+
+[node name="InteractionIcon" type="Node2D"]
+script = ExtResource("1_efovm")
+
+[node name="ActionIcon" type="TextureRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 30.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_hod7j")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_vry0h")
+action_name = &"surf"
+
+[node name="ActionIcon2" type="TextureRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 30.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_hod7j")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_vry0h")
+action_name = &"jsurf"
